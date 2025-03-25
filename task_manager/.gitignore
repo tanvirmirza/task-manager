@@ -31,8 +31,9 @@ migrate_working_dir/
 .pub/
 /build/
 
+# Ignore the .gitignore file itself
+.gitignore
 
-/.gitignore
 # /lib/screens/*
 # !/lib/screens/splash_screen.dart
 
