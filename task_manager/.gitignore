@@ -35,6 +35,7 @@ migrate_working_dir/
 !/lib/screens/login_screen.dart
 !/lib/screens/register_screen.dart
 !/lib/screens/forgot_password_verify_screen.dart
+!/lib/screens/forgot_password_pin_verify_screen.dart
 
 # Symbolication related
 app.*.symbols
