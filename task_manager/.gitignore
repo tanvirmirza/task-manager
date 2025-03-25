@@ -32,6 +32,7 @@ migrate_working_dir/
 /build/
 /lib/screens/*
 !/lib/screens/splash_screen.dart
+!/lib/screens/login_screen.dart
 
 # Symbolication related
 app.*.symbols
