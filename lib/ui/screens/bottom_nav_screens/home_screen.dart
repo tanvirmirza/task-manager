@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../widgets/progress_box.dart';
 import '../../widgets/tm_app_bar.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,22 +29,32 @@ class _HomeScreenState extends State<HomeScreen> {
                       fontWeight: FontWeight.bold,
                       color: Colors.black87)),
               const SizedBox(height: 20),
-              Center(
-                child: CircularPercentIndicator(
-                  radius: 110.0,
-                  lineWidth: 12.0,
-                  percent: 0.7,
-                  center: const Text("70%",
-                      style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blueAccent)),
-                  progressColor: Colors.blue,
-                  backgroundColor: Colors.grey.shade300,
-                  circularStrokeCap: CircularStrokeCap.round,
-                  animation: true,
-                  animationDuration: 1200,
-                ),
+              GridView.count(
+                physics: const AlwaysScrollableScrollPhysics(),
+                shrinkWrap: true,
+                crossAxisCount: 2,
+                children: const [
+                  ProgressBox(
+                    centerText: '70%',
+                    footerText: 'Overall Progress',
+                    percent: 0.7,
+                    centerTextColor: Colors.blueAccent,
+                    progressColor: Colors.blue,
+                  ),
+                  ProgressBox(
+                      progressColor: Colors.orange,
+                      centerTextColor: Colors.orangeAccent,
+                      footerText: "Progress Tasks",
+                      centerText: "40%",
+                      percent: 0.4),
+                  ProgressBox(
+                    centerText: '100%',
+                    footerText: 'Completed Tasks',
+                    percent: 1.0,
+                    centerTextColor: Colors.greenAccent,
+                    progressColor: Colors.green,
+                  ),
+                ],
               ),
               const SizedBox(height: 30),
               const Text("Task List",

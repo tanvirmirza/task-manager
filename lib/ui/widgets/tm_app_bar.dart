@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:task_manager/ui/screens/bottom_nav_screen/profile_screen.dart';
+
+import '../screens/bottom_nav_screens/profile_screen.dart';
 
 class TMAppBar extends StatefulWidget implements PreferredSizeWidget {
   const TMAppBar({

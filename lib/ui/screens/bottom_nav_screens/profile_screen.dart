@@ -17,7 +17,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: const TMAppBar(
         fromProfileScreen: true,
       ),
-      backgroundColor: const Color(0xFFF6F5F5),
+      // backgroundColor: const Color(0xFFF6F5F5),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -25,6 +26,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               Container(
                 decoration: BoxDecoration(
+                  boxShadow: const [
+                    BoxShadow(
+                        blurRadius: 4,
+                        color: Colors.black12,
+                        offset: Offset(0, 3)),
+                  ],
                   borderRadius: BorderRadius.circular(5),
                   color: Colors.white,
                 ),
@@ -34,22 +41,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Center(
-                          child: Card(
-                            elevation: 2,
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Container(
-                              height: 40,
-                              color: Colors.white,
-                              width: double.maxFinite,
-                              alignment: Alignment.center,
-                              child: const Text(
-                                'Personal Details',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                          child: Container(
+                            height: 40,
+                            width: double.maxFinite,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                boxShadow: const [
+                                  BoxShadow(
+                                      blurRadius: 3,
+                                      color: Colors.black12,
+                                      offset: Offset(1, 2)),
+                                ],
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.white),
+                            child: const Text(
+                              'Personal Details',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
@@ -60,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         const Center(
                           child: CircleAvatar(
                             radius: 80,
-                            child: Text('Image'),
+                            child: Icon(Icons.image),
                           ),
                         ),
                         const SizedBox(
@@ -145,6 +153,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               Container(
                 decoration: BoxDecoration(
+                  boxShadow: const [
+                    BoxShadow(
+                        blurRadius: 4,
+                        color: Colors.black12,
+                        offset: Offset(1, 2)),
+                  ],
                   borderRadius: BorderRadius.circular(5),
                   color: Colors.white,
                 ),
@@ -154,22 +168,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Center(
-                        child: Card(
-                          elevation: 2,
-                          color: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Container(
-                            height: 40,
-                            width: double.maxFinite,
-                            color: Colors.white,
-                            alignment: Alignment.center,
-                            child: const Text(
-                              'Change Your Password',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
+                        child: Container(
+                          height: 40,
+                          width: double.maxFinite,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              boxShadow: const [
+                                BoxShadow(
+                                    blurRadius: 4,
+                                    color: Colors.black12,
+                                    offset: Offset(0, 2)),
+                              ],
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.white),
+                          child: const Text(
+                            'Change Your Password',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
