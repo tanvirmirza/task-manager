@@ -8,10 +8,12 @@ class ForgotPasswordVerifyScreen extends StatefulWidget {
   const ForgotPasswordVerifyScreen({super.key});
 
   @override
-  State<ForgotPasswordVerifyScreen> createState() => _ForgotPasswordVerifyScreenState();
+  State<ForgotPasswordVerifyScreen> createState() =>
+      _ForgotPasswordVerifyScreenState();
 }
 
-class _ForgotPasswordVerifyScreenState extends State<ForgotPasswordVerifyScreen> {
+class _ForgotPasswordVerifyScreenState
+    extends State<ForgotPasswordVerifyScreen> {
   final TextEditingController _emailTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
@@ -33,17 +35,23 @@ class _ForgotPasswordVerifyScreenState extends State<ForgotPasswordVerifyScreen>
                     'Your Email Address',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  Text('A 6 digit verification pin will be send to your email.', style:  Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.grey) ,),
+                  Text(
+                    'A 6 digit verification pin will be send to your email.',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(color: Colors.grey),
+                  ),
                   const SizedBox(
                     height: 24,
                   ),
-                 
                   TextFormField(
                     controller: _emailTEController,
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(hintText: 'Email'),
                     style: Theme.of(context).textTheme.labelLarge,
+                    validator: _emailValidator,
                   ),
                   const SizedBox(
                     height: 16,
@@ -57,7 +65,6 @@ class _ForgotPasswordVerifyScreenState extends State<ForgotPasswordVerifyScreen>
                   Center(
                     child: Column(
                       children: [
-
                         RichText(
                             text: TextSpan(
                                 style: const TextStyle(
@@ -86,20 +93,36 @@ class _ForgotPasswordVerifyScreenState extends State<ForgotPasswordVerifyScreen>
     );
   }
 
-
-void _onTapSignInButton() {
+  void _onTapSignInButton() {
     Navigator.pushAndRemoveUntil(
-        context, MaterialPageRoute(builder: (context) => const LoginScreen()), (pre) => false);
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+        (pre) => false);
   }
 
-    void _onTapSubmitButton() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const ForgotPasswordPinVerifyScreen()));
+  void _onTapSubmitButton() {
+    if (_formKey.currentState?.validate() == true) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const ForgotPasswordPinVerifyScreen()));
+    }
   }
 
   @override
   void dispose() {
     _emailTEController.dispose();
     super.dispose();
+  }
+
+  String? _emailValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your email';
+    }
+    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+    if (!emailRegex.hasMatch(value)) {
+      return 'Please enter a valid email address';
+    }
+    return null;
   }
 }

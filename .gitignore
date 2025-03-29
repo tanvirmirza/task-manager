@@ -41,3 +41,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Ignore specific Dart file inside a directory
+lib/ui/widgets/progress_box.dart

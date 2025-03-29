@@ -43,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(hintText: 'Email'),
                     style: Theme.of(context).textTheme.labelLarge,
+                    validator: _emailValidator,
                   ),
                   const SizedBox(
                     height: 8,
@@ -52,6 +53,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     textInputAction: TextInputAction.done,
                     decoration: const InputDecoration(hintText: 'Password'),
                     style: Theme.of(context).textTheme.labelLarge,
+                    obscureText: true,
+                    validator: _passwordValidator,
                   ),
                   const SizedBox(
                     height: 16,
@@ -110,11 +113,16 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _onTapSingInButton() {
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => const BottomNavBarScreen()),
-      (pre) => false,
-    );
+    if (_formKey.currentState?.validate() == true) {
+      if (_emailTEController.text == 'test@mail.com' &&
+          _passwordTEController.text == '000000') {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const BottomNavBarScreen()),
+          (pre) => false,
+        );
+      } 
+    }
   }
 
   @override
@@ -122,5 +130,26 @@ class _LoginScreenState extends State<LoginScreen> {
     _emailTEController.dispose();
     _passwordTEController.dispose();
     super.dispose();
+  }
+
+  String? _emailValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your email';
+    }
+    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+    if (!emailRegex.hasMatch(value)) {
+      return 'Please enter a valid email address';
+    }
+    return null;
+  }
+
+  String? _passwordValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your password';
+    }
+    if (value.length < 6) {
+      return 'Password must be at least 6 characters long';
+    }
+    return null;
   }
 }

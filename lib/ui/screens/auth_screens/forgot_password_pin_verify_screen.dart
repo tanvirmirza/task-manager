@@ -63,6 +63,7 @@ class _ForgotPasswordPinVerifyScreenState
                     backgroundColor: Colors.transparent,
                     enableActiveFill: true,
                     controller: _pinCodeTEController,
+                    validator: _validatePinCode,
                     appContext: context,
                   ),
                   const SizedBox(
@@ -113,13 +114,24 @@ class _ForgotPasswordPinVerifyScreenState
   }
 
   void _onTapResetPasswordButton() {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const ResetPasswordScreen()));
+    if (_formKey.currentState?.validate() == true) {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const ResetPasswordScreen()));
+    }
   }
 
   @override
   void dispose() {
     _pinCodeTEController.dispose();
     super.dispose();
+  }
+
+  String? _validatePinCode(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Pin code cannot be empty';
+    } else if (value.length != 6) {
+      return 'Pin code must be 6 digits';
+    }
+    return null;
   }
 }
