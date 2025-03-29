@@ -11,6 +11,33 @@ class MyApp extends StatelessWidget {
         title: 'Task Manager',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          colorSchemeSeed: const Color.fromRGBO(35, 75, 118, 1),
+          inputDecorationTheme: InputDecorationTheme(
+            hintStyle: const TextStyle(
+                color: Colors.grey, fontWeight: FontWeight.w500, fontSize: 15),
+            hoverColor: Colors.white,
+            filled: true,
+            fillColor: Colors.white,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+            errorBorder: _getBorderNone(),
+            enabledBorder: _getBorderNone(),
+            border: _getBorderNone(),
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromRGBO(88, 134, 183, 1),
+                  foregroundColor: Colors.white,
+                  fixedSize: const Size.fromWidth(double.maxFinite),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ))),
+          textTheme: const TextTheme(
+            titleLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+            labelLarge: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+          ),
+        ),
+
             useMaterial3: true,
             colorSchemeSeed: const Color.fromRGBO(35, 75, 118, 1),
             
@@ -41,6 +68,7 @@ class MyApp extends StatelessWidget {
                     ),
                     
                     ),
+
         home: const SplashScreen());
   }
 
