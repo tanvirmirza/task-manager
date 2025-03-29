@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'ui/screens/auth_screens/login_screen.dart';
+import 'ui/screens/splash_screen.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -37,7 +36,7 @@ class MyApp extends StatelessWidget {
             labelLarge: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
           ),
         ),
-        home: const LoginScreen());
+        home: const SplashScreen());
   }
 
   OutlineInputBorder _getBorderNone() {

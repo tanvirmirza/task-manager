@@ -11,8 +11,10 @@ class ResetPasswordScreen extends StatefulWidget {
 }
 
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
-  final TextEditingController _newPasswordTEController = TextEditingController();
-  final TextEditingController _confirmNewpasswordTEController = TextEditingController();
+  final TextEditingController _newPasswordTEController =
+      TextEditingController();
+  final TextEditingController _confirmNewpasswordTEController =
+      TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     'Set Password',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                   Text(
+                  Text(
                     'Set a new password minimum length of 6 letters.',
                     style: Theme.of(context)
                         .textTheme
@@ -55,15 +57,15 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   TextFormField(
                     controller: _confirmNewpasswordTEController,
                     textInputAction: TextInputAction.done,
-                    decoration: const InputDecoration(hintText: 'Confirm New Password'),
+                    decoration:
+                        const InputDecoration(hintText: 'Confirm New Password'),
                     style: Theme.of(context).textTheme.labelLarge,
                   ),
                   const SizedBox(
                     height: 16,
                   ),
                   ElevatedButton(
-                      onPressed: () {},
-                      child: const Text('Confirm')),
+                      onPressed: () {}, child: const Text('Confirm')),
                   const SizedBox(
                     height: 32,
                   ),
@@ -94,10 +96,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     );
   }
 
-
-void _onTapSignInButton() {
+  void _onTapSignInButton() {
     Navigator.pushAndRemoveUntil(
-        context, MaterialPageRoute(builder: (context) => const LoginScreen()), (pre) => false);
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+        (pre) => false);
   }
 
   @override

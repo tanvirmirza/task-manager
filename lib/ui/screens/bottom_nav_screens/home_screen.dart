@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../widgets/progress_box.dart';
+import '../../widgets/task_progress_tile.dart';
 import '../../widgets/tm_app_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -62,59 +63,31 @@ class _HomeScreenState extends State<HomeScreen> {
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: Colors.black87)),
-              taskTile("Design Homepage", 0.8, Colors.green, "In Progress",
-                  Icons.design_services),
-              taskTile("API Integration", 1.0, Colors.blue, "Completed",
-                  Icons.check_circle),
-              taskTile("Fix Bugs", 0.0, Colors.red, "Cancelled", Icons.cancel),
-              taskTile("Write Documentation", 0.6, Colors.orange, "In Progress",
-                  Icons.description)
+              const TaskProgressTile(
+                  title: "Design Homepage",
+                  progress: 0.8,
+                  color: Colors.green,
+                  status: "In Progress",
+                  icon: Icons.design_services),
+              const TaskProgressTile(
+                  title: "API Integration",
+                  progress: 1.0,
+                  color: Colors.blue,
+                  status: "Completed",
+                  icon: Icons.check_circle),
+              const TaskProgressTile(
+                  title: "Fix Bugs",
+                  progress: 0.0,
+                  color: Colors.red,
+                  status: "Cancelled",
+                  icon: Icons.cancel),
+              const TaskProgressTile(
+                  title: "Write Documentation",
+                  progress: 0.6,
+                  color: Colors.orange,
+                  status: "In Progress",
+                  icon: Icons.description)
             ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget taskTile(String title, double progress, Color color, String status,
-      IconData icon) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: 6,
-      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-      child: ListTile(
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        leading: CircleAvatar(
-          backgroundColor: color.withOpacity(0.2),
-          child: Icon(icon, color: color, size: 28),
-        ),
-        title: Text(title,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 5),
-            LinearProgressIndicator(
-                value: progress,
-                color: color,
-                backgroundColor: Colors.grey.shade300,
-                minHeight: 6),
-            const SizedBox(height: 5),
-            Text(status,
-                style: TextStyle(
-                    color: color, fontWeight: FontWeight.bold, fontSize: 14)),
-          ],
-        ),
-        trailing: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          decoration: BoxDecoration(
-            color: color.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Text(
-            "${(progress * 100).toInt()}%",
-            style: TextStyle(color: color, fontWeight: FontWeight.bold),
           ),
         ),
       ),

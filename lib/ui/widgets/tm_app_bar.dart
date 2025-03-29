@@ -56,7 +56,7 @@ class _TMAppBarState extends State<TMAppBar> {
                     ),
                   ),
                   Text(
-                    'Good Morning',
+                    _showGrettings(),
                     style: textTheme.bodyLarge?.copyWith(color: Colors.grey),
                   ),
                 ],
@@ -86,5 +86,20 @@ class _TMAppBarState extends State<TMAppBar> {
         builder: (context) => const ProfileScreen(),
       ),
     );
+  }
+
+  String _showGrettings() {
+    int now = DateTime.now().hour;
+    if (now >= 5 && now < 12) {
+      return "Good Morning";
+    } else if (now >= 12 && now < 17) {
+      return "Good Afternoon";
+    } else if (now >= 17 && now < 21) {
+      return "Good Evening";
+    } else if (now >= 21 && now < 5) {
+      return "Good Nignt";
+    } else {
+      return "What's up";
+    }
   }
 }
