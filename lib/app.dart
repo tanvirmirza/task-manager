@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:task_manager/ui/screens/main_bottom_navbar_screen.dart';
-import 'ui/screens/splash_screen.dart';
-
+import 'package:task_manager/ui/views/home/main_bottom_navbar_screen.dart';
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

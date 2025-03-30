@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/screen_background.dart';
 import 'forgot_password_verify_screen.dart';
-import '../main_bottom_navbar_screen.dart';
+import '../home/main_bottom_navbar_screen.dart';
 import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
