@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'ui/screens/splash_screen.dart';
-
+import 'package:task_manager/ui/views/home/main_bottom_navbar_screen.dart';
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -37,8 +35,7 @@ class MyApp extends StatelessWidget {
             labelLarge: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
           ),
         ),
-
-        home: const SplashScreen());
+        home: const BottomNavBarScreen());
   }
 
   OutlineInputBorder _getBorderNone() {

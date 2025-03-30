@@ -21,8 +21,8 @@ class ProgressBox extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        height: 160,
-        width: 150,
+        height: MediaQuery.of(context).size.width * 0.25,
+        width: MediaQuery.of(context).size.width * 0.25,
         alignment: Alignment.center,
         decoration: BoxDecoration(boxShadow: const [
           BoxShadow(blurRadius: 4, color: Colors.black12, offset: Offset(0, 2)),
@@ -30,8 +30,8 @@ class ProgressBox extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: CircularPercentIndicator(
-            radius: 60.0,
-            lineWidth: 8.0,
+            radius: MediaQuery.of(context).size.width * 0.12,
+            lineWidth: MediaQuery.of(context).size.width * 0.02,
             percent: percent,
             center: Text(centerText,
                 style: TextStyle(
@@ -44,7 +44,9 @@ class ProgressBox extends StatelessWidget {
             animation: true,
             animationDuration: 1200,
             footer: Padding(
-              padding: const EdgeInsets.only(top: 8),
+              padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height *
+                      (MediaQuery.of(context).size.height < 600 ? 0.04 : 0.02)),
               child: Text(footerText,
                   style: const TextStyle(fontWeight: FontWeight.bold)),
             ),

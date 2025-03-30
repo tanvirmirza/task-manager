@@ -50,6 +50,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(hintText: 'New Password'),
                     style: Theme.of(context).textTheme.labelLarge,
+                    validator: _validatePassword,
                   ),
                   const SizedBox(
                     height: 8,
@@ -60,12 +61,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     decoration:
                         const InputDecoration(hintText: 'Confirm New Password'),
                     style: Theme.of(context).textTheme.labelLarge,
+                    validator: _validatePassword,
                   ),
                   const SizedBox(
                     height: 16,
                   ),
                   ElevatedButton(
-                      onPressed: () {}, child: const Text('Confirm')),
+                      onPressed: _onTapSubmitButton,
+                      child: const Text('Confirm')),
                   const SizedBox(
                     height: 32,
                   ),
@@ -96,6 +99,15 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     );
   }
 
+  void _onTapSubmitButton() {
+    if (_formKey.currentState?.validate() == true) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
+          (pre) => false);
+    }
+  }
+
   void _onTapSignInButton() {
     Navigator.pushAndRemoveUntil(
         context,
@@ -108,5 +120,17 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     _newPasswordTEController.dispose();
     _confirmNewpasswordTEController.dispose();
     super.dispose();
+  }
+
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Password cannot be empty';
+    } else if (value.length < 6) {
+      return 'Password must be at least 6 characters long';
+    } else if (_newPasswordTEController.text !=
+        _confirmNewpasswordTEController.text) {
+      return 'Passwords do not match';
+    }
+    return null;
   }
 }

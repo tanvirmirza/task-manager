@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:task_manager/ui/widgets/screen_background.dart';
-import 'auth_screens/login_screen.dart';
+import '../auth/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -41,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               Text(
                 'Task Manager',
-                style: GoogleFonts.baumans(
+                style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.w600,
                     color: Colors.grey.shade500),

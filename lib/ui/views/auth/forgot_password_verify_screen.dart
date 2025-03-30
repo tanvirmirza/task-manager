@@ -1,20 +1,20 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/screen_background.dart';
-import 'forgot_password_verify_screen.dart';
-import '../main_bottom_navbar_screen.dart';
-import 'register_screen.dart';
+import 'forgot_password_pin_verify_screen.dart';
+import 'login_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class ForgotPasswordVerifyScreen extends StatefulWidget {
+  const ForgotPasswordVerifyScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<ForgotPasswordVerifyScreen> createState() =>
+      _ForgotPasswordVerifyScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _ForgotPasswordVerifyScreenState
+    extends State<ForgotPasswordVerifyScreen> {
   final TextEditingController _emailTEController = TextEditingController();
-  final TextEditingController _passwordTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -32,32 +32,32 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 80,
                   ),
                   Text(
-                    'Get Started With',
+                    'Your Email Address',
                     style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  Text(
+                    'A 6 digit verification pin will be send to your email.',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(color: Colors.grey),
                   ),
                   const SizedBox(
                     height: 24,
                   ),
                   TextFormField(
                     controller: _emailTEController,
-                    textInputAction: TextInputAction.next,
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(hintText: 'Email'),
                     style: Theme.of(context).textTheme.labelLarge,
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  TextFormField(
-                    controller: _passwordTEController,
-                    textInputAction: TextInputAction.done,
-                    decoration: const InputDecoration(hintText: 'Password'),
-                    style: Theme.of(context).textTheme.labelLarge,
+                    validator: _emailValidator,
                   ),
                   const SizedBox(
                     height: 16,
                   ),
                   ElevatedButton(
-                      onPressed: _onTapSingInButton,
+                      onPressed: _onTapSubmitButton,
                       child: const Icon(Icons.arrow_circle_right_outlined)),
                   const SizedBox(
                     height: 32,
@@ -65,10 +65,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   Center(
                     child: Column(
                       children: [
-                        TextButton(
-                            style: TextButton.styleFrom(elevation: 0),
-                            onPressed: _onTapForgetPasswordButton,
-                            child: const Text('Forgot Password?')),
                         RichText(
                             text: TextSpan(
                                 style: const TextStyle(
@@ -76,14 +72,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                     color: Colors.black54,
                                     fontWeight: FontWeight.w600),
                                 children: [
-                              const TextSpan(text: "Don't have account? "),
+                              const TextSpan(text: "Have account? "),
                               TextSpan(
-                                  text: "Sign Up",
+                                  text: "Sign In",
                                   style: const TextStyle(
                                       color: Colors.green,
                                       fontWeight: FontWeight.bold),
                                   recognizer: TapGestureRecognizer()
-                                    ..onTap = _onTapSignUpButton),
+                                    ..onTap = _onTapSignInButton),
                             ])),
                       ],
                     ),
@@ -97,30 +93,36 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void _onTapForgetPasswordButton() {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => const ForgotPasswordVerifyScreen()));
-  }
-
-  void _onTapSignUpButton() {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const RegisterScreen()));
-  }
-
-  void _onTapSingInButton() {
+  void _onTapSignInButton() {
     Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => const BottomNavBarScreen()),
-      (pre) => false,
-    );
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+        (pre) => false);
+  }
+
+  void _onTapSubmitButton() {
+    if (_formKey.currentState?.validate() == true) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const ForgotPasswordPinVerifyScreen()));
+    }
   }
 
   @override
   void dispose() {
     _emailTEController.dispose();
-    _passwordTEController.dispose();
     super.dispose();
+  }
+
+  String? _emailValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your email';
+    }
+    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+    if (!emailRegex.hasMatch(value)) {
+      return 'Please enter a valid email address';
+    }
+    return null;
   }
 }

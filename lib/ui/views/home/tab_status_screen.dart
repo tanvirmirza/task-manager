@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager/ui/utils/custom_color.dart';
 import '../../widgets/tm_app_bar.dart';
-import '../task_screens/cencelled_task_screen.dart';
-import '../task_screens/completed_task_screen.dart';
-import '../task_screens/progerss_task_screen.dart';
+import '../tasks/cencelled_task_screen.dart';
+import '../tasks/completed_task_screen.dart';
+import '../tasks/progerss_task_screen.dart';
 
 class TabStatusScreen extends StatefulWidget {
   const TabStatusScreen({super.key});

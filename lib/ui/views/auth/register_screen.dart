@@ -48,6 +48,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       hintText: 'Email',
                     ),
                     style: Theme.of(context).textTheme.labelLarge,
+                    validator: _validateEmail,
                   ),
                   const SizedBox(
                     height: 8,
@@ -57,6 +58,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(hintText: 'First Name'),
                     style: Theme.of(context).textTheme.labelLarge,
+                    validator: (value) => _validateName(value, 'First Name'),
                   ),
                   const SizedBox(
                     height: 8,
@@ -66,6 +68,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(hintText: 'Last Name'),
                     style: Theme.of(context).textTheme.labelLarge,
+                    validator: (value) => _validateName(value, 'Last Name'),
                   ),
                   const SizedBox(
                     height: 8,
@@ -76,6 +79,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     keyboardType: TextInputType.phone,
                     decoration: const InputDecoration(hintText: 'Mobile'),
                     style: Theme.of(context).textTheme.labelLarge,
+                    validator: _validateMobile,
                   ),
                   const SizedBox(
                     height: 8,
@@ -85,12 +89,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     textInputAction: TextInputAction.done,
                     decoration: const InputDecoration(hintText: 'Password'),
                     style: Theme.of(context).textTheme.labelLarge,
+                    validator: _validatePassword,
                   ),
                   const SizedBox(
                     height: 16,
                   ),
                   ElevatedButton(
-                      onPressed: () {},
+                      onPressed: _onSubmitButton,
                       child: const Icon(Icons.arrow_circle_right_outlined)),
                   const SizedBox(
                     height: 32,
@@ -126,6 +131,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     Navigator.pop(context);
   }
 
+  void _onSubmitButton() {
+    if (_formKey.currentState?.validate() != true) {
+      return;
+    }
+  }
+
   @override
   void dispose() {
     _emailTEController.dispose();
@@ -134,5 +145,47 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _mobileTEController.dispose();
     _passwordTEController.dispose();
     super.dispose();
+  }
+
+  String? _validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Email is required';
+    }
+    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+    if (!emailRegex.hasMatch(value)) {
+      return 'Enter a valid email';
+    }
+    return null;
+  }
+
+  String? _validateName(String? value, String fieldName) {
+    if (value == null || value.isEmpty) {
+      return '$fieldName is required';
+    }
+    if (value.length < 2) {
+      return '$fieldName must be at least 2 characters';
+    }
+    return null;
+  }
+
+  String? _validateMobile(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Mobile number is required';
+    }
+    final mobileRegex = RegExp(r'^\d{10}$');
+    if (!mobileRegex.hasMatch(value)) {
+      return 'Enter a valid 10-digit mobile number';
+    }
+    return null;
+  }
+
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Password is required';
+    }
+    if (value.length < 6) {
+      return 'Password must be at least 6 characters';
+    }
+    return null;
   }
 }
