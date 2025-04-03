@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/provider/image_provider.dart';
 
-import '../views/home/profile_screen.dart';
+import '../views/home/profile_edit_screen.dart';
 
 class TMAppBar extends StatefulWidget implements PreferredSizeWidget {
   const TMAppBar({
@@ -46,60 +46,59 @@ class _TMAppBarState extends State<TMAppBar> {
           _onTapProfileSection(context);
         },
         child: Row(
-          children: [
-            Consumer<ImagePickProvider>(builder: (context, provider, child) {
-               XFile? image = provider.profileImage;
-        if (image == null) {
-          return const CircleAvatar(
-            radius: 16,
-            child: Icon(
-              Icons.person,
-              size: 24,
-              color: Colors.grey,
-            ),
-          );
-        }
-
-        return ClipOval(
-          child: kIsWeb
-              ? Image.network(
-                  image.path,
-                  fit: BoxFit.cover,
-                  width: 32,
-                  height: 32,
-                )
-              : Image.file(
-                  File(image.path),
-                  fit: BoxFit.cover,
-                  width: 32,
-                  height: 32,
-                ),
-        );
-
-            },),
-            // const CircleAvatar(
-            //   radius: 16,
-            // ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Hi, Rahim Hasan',
-                    style: textTheme.bodySmall?.copyWith(
-                      color: Colors.grey,
-                    ),
+                  Consumer<ImagePickProvider>(
+                    builder: (context, provider, child) {
+                      XFile? image = provider.profileImage;
+                      if (image == null) {
+                        return const CircleAvatar(
+                          radius: 16,
+                          child: Icon(
+                            Icons.person,
+                            size: 24,
+                            color: Colors.grey,
+                          ),
+                        );
+                      }
+
+                      return ClipOval(
+                        child: kIsWeb
+                            ? Image.network(
+                                image.path,
+                                fit: BoxFit.cover,
+                                width: 32,
+                                height: 32,
+                              )
+                            : Image.file(
+                                File(image.path),
+                                fit: BoxFit.cover,
+                                width: 32,
+                                height: 32,
+                              ),
+                      );
+                    },
                   ),
-                  Text(
-                    _showGrettings(),
-                    style: textTheme.bodyLarge?.copyWith(color: Colors.grey),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Hi, Mirza Tanvir',
+                          style: textTheme.bodySmall?.copyWith(
+                            color: Colors.grey,
+                          ),
+                        ),
+                        Text(
+                          _showGrettings(),
+                          style:
+                              textTheme.bodyLarge?.copyWith(color: Colors.grey),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
       ),
       actions: [
         IconButton(
@@ -119,7 +118,7 @@ class _TMAppBarState extends State<TMAppBar> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const ProfileScreen(),
+        builder: (context) => const ProfileEditScreen(),
       ),
     );
   }

@@ -6,27 +6,31 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/provider/image_provider.dart';
 import '../../widgets/profile_text_field.dart';
-import '../../widgets/tm_app_bar.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+class ProfileEditScreen extends StatefulWidget {
+  const ProfileEditScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<ProfileEditScreen> createState() => _ProfileEditScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileEditScreenState extends State<ProfileEditScreen> {
   bool _isNewObscure = true;
   bool _isConfirmObscre = true;
-  XFile? _image;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const TMAppBar(
-        fromProfileScreen: true,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(CupertinoIcons.back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: const Text('Update Profile'),
+        centerTitle: true,
       ),
-      // backgroundColor: const Color(0xFFF6F5F5),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
@@ -49,28 +53,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Center(
-                          child: Container(
-                            height: 40,
-                            width: double.maxFinite,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                boxShadow: const [
-                                  BoxShadow(
-                                      blurRadius: 3,
-                                      color: Colors.black12,
-                                      offset: Offset(1, 2)),
-                                ],
-                                borderRadius: BorderRadius.circular(8),
-                                color: Colors.white),
-                            child: const Text(
-                              'Personal Details',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
                         const SizedBox(
                           height: 30,
                         ),

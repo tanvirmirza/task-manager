@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ProfileTextField extends StatelessWidget {
+  final TextEditingController? controller;
   final FormFieldValidator? validator;
   final String? hintText;
   final TextInputAction? textInputAction;
@@ -8,14 +9,16 @@ class ProfileTextField extends StatelessWidget {
   final Widget? suffixIcon;
   final bool obscureText;
 
-  const ProfileTextField(
-      {super.key,
-      this.validator,
-      this.hintText,
-      this.textInputAction,
-      this.keyboardType,
-      this.suffixIcon,
-      this.obscureText = false});
+  const ProfileTextField({
+    super.key,
+    this.controller,
+    this.validator,
+    this.hintText,
+    this.textInputAction,
+    this.keyboardType,
+    this.suffixIcon,
+    this.obscureText = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +30,7 @@ class ProfileTextField extends StatelessWidget {
           height: 8,
         ),
         TextFormField(
+          controller: controller,
           validator: validator,
           textInputAction: textInputAction,
           keyboardType: keyboardType,
