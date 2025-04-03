@@ -3,7 +3,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import '../../utils/custom_color.dart';
 import 'add_new_task_screen.dart';
 import 'home_screen.dart';
-import 'profile_screen.dart';
+import 'profile_view_screen.dart';
 import 'tab_status_screen.dart';
 
 class BottomNavBarScreen extends StatefulWidget {
@@ -19,7 +19,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     HomeScreen(),
     AddNewTaskScreen(),
     TabStatusScreen(),
-    ProfileScreen()
+    ProfileViewScreen()
   ];
 
   @override

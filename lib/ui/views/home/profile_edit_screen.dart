@@ -1,23 +1,36 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:task_manager/provider/image_provider.dart';
 import '../../widgets/profile_text_field.dart';
-import '../../widgets/tm_app_bar.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+class ProfileEditScreen extends StatefulWidget {
+  const ProfileEditScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<ProfileEditScreen> createState() => _ProfileEditScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileEditScreenState extends State<ProfileEditScreen> {
+  bool _isNewObscure = true;
+  bool _isConfirmObscre = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const TMAppBar(
-        fromProfileScreen: true,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(CupertinoIcons.back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: const Text('Update Profile'),
+        centerTitle: true,
       ),
-      // backgroundColor: const Color(0xFFF6F5F5),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
@@ -40,49 +53,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Center(
-                          child: Container(
-                            height: 40,
-                            width: double.maxFinite,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                boxShadow: const [
-                                  BoxShadow(
-                                      blurRadius: 3,
-                                      color: Colors.black12,
-                                      offset: Offset(1, 2)),
-                                ],
-                                borderRadius: BorderRadius.circular(8),
-                                color: Colors.white),
-                            child: const Text(
-                              'Personal Details',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
                         const SizedBox(
                           height: 30,
                         ),
-                        const Center(
-                          child: CircleAvatar(
-                            radius: 80,
-                            child: Icon(Icons.image),
+                        Center(
+                          child: Consumer<ImagePickProvider>(
+                            builder: (context, provider, child) {
+                              XFile? image = provider.profileImage;
+
+                              if (image == null) {
+                                return const CircleAvatar(
+                                  radius: 80,
+                                  child: Icon(
+                                    Icons.person,
+                                    size: 50,
+                                    color: Colors.grey,
+                                  ),
+                                );
+                              }
+
+                              return ClipOval(
+                                child: kIsWeb
+                                    ? Image.network(
+                                        image.path,
+                                        fit: BoxFit.cover,
+                                        width: 160,
+                                        height: 160,
+                                      )
+                                    : Image.file(
+                                        File(image.path),
+                                        fit: BoxFit.cover,
+                                        width: 160,
+                                        height: 160,
+                                      ),
+                              );
+                            },
                           ),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                        ElevatedButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'UPLOAD YOUR IMAGE',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            )),
+                        ElevatedButton.icon(
+                          onPressed: _onUploadImage,
+                          label: const Text(
+                            'UPLOAD YOUR IMAGE',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          icon: const Icon(Icons.photo_library),
+                        ),
                         const SizedBox(
                           height: 30,
                         ),
@@ -192,15 +213,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBox(
                         height: 30,
                       ),
-                      const ProfileTextField(
+                      ProfileTextField(
                         hintText: 'New Password',
+                        obscureText: _isNewObscure,
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _isNewObscure = !_isNewObscure;
+                              });
+                            },
+                            icon: Icon(_isNewObscure
+                                ? Icons.visibility_off
+                                : Icons.visibility)),
                         textInputAction: TextInputAction.next,
                       ),
                       const SizedBox(
                         height: 20,
                       ),
-                      const ProfileTextField(
+                      ProfileTextField(
                         hintText: 'Confirm Password',
+                        obscureText: _isConfirmObscre,
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _isConfirmObscre = !_isConfirmObscre;
+                              });
+                            },
+                            icon: Icon(_isConfirmObscre
+                                ? Icons.visibility_off
+                                : Icons.visibility)),
                         textInputAction: TextInputAction.done,
                       ),
                       const SizedBox(height: 16),
@@ -237,5 +278,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     );
+  }
+
+  Future _onUploadImage() async {
+    var image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      ImagePickProvider().updateProfileImage(image);
+      context.read<ImagePickProvider>().updateProfileImage(image);
+    }
   }
 }
