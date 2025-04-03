@@ -11,6 +11,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  bool _isNewObscure = true;
+  bool _isConfirmObscre = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -192,15 +194,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBox(
                         height: 30,
                       ),
-                      const ProfileTextField(
+                      ProfileTextField(
                         hintText: 'New Password',
+                        obscureText: _isNewObscure,
+                        prefixIcon: IconButton(
+                            onPressed: () {
+                              _isNewObscure = !_isNewObscure;
+                            },
+                            icon: Icon(_isNewObscure
+                                ? Icons.visibility_off
+                                : Icons.visibility)),
                         textInputAction: TextInputAction.next,
                       ),
                       const SizedBox(
                         height: 20,
                       ),
-                      const ProfileTextField(
+                      ProfileTextField(
                         hintText: 'Confirm Password',
+                        obscureText: _isConfirmObscre,
+                        prefixIcon: IconButton(
+                            onPressed: () {
+                              _isConfirmObscre = !_isConfirmObscre;
+                            },
+                            icon: Icon(_isConfirmObscre
+                                ? Icons.visibility_off
+                                : Icons.visibility)),
                         textInputAction: TextInputAction.done,
                       ),
                       const SizedBox(height: 16),

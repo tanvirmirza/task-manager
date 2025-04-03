@@ -18,6 +18,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  bool _isObscure = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,8 +89,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   TextFormField(
                     controller: _passwordTEController,
                     textInputAction: TextInputAction.done,
-                    decoration: const InputDecoration(hintText: 'Password'),
+                    decoration: InputDecoration(
+                        hintText: 'Password',
+                        prefixIcon: IconButton(
+                            onPressed: () {
+                              _isObscure = !_isObscure;
+                            },
+                            icon: Icon(_isObscure
+                                ? Icons.visibility_off
+                                : Icons.visibility))),
                     style: Theme.of(context).textTheme.labelLarge,
+                    obscureText: _isObscure,
                     validator: _validatePassword,
                   ),
                   const SizedBox(

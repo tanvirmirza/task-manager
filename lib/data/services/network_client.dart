@@ -3,7 +3,7 @@ import 'package:http/http.dart';
 import 'network_response.dart';
 
 class NetworkClient {
-  static Future<NetworkResponse> getRequest({required String url}) async {
+  static Future<NetworkResponse> getResponse({required url}) async {
     try {
       Uri uri = Uri.parse(url);
       Response response = await get(uri);
