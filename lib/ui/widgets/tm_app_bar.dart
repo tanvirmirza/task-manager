@@ -1,4 +1,10 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:task_manager/provider/image_provider.dart';
 
 import '../views/home/profile_screen.dart';
 
@@ -41,9 +47,39 @@ class _TMAppBarState extends State<TMAppBar> {
         },
         child: Row(
           children: [
-            const CircleAvatar(
-              radius: 16,
+            Consumer<ImagePickProvider>(builder: (context, provider, child) {
+               XFile? image = provider.profileImage;
+        if (image == null) {
+          return const CircleAvatar(
+            radius: 16,
+            child: Icon(
+              Icons.person,
+              size: 24,
+              color: Colors.grey,
             ),
+          );
+        }
+
+        return ClipOval(
+          child: kIsWeb
+              ? Image.network(
+                  image.path,
+                  fit: BoxFit.cover,
+                  width: 32,
+                  height: 32,
+                )
+              : Image.file(
+                  File(image.path),
+                  fit: BoxFit.cover,
+                  width: 32,
+                  height: 32,
+                ),
+        );
+
+            },),
+            // const CircleAvatar(
+            //   radius: 16,
+            // ),
             const SizedBox(width: 8),
             Expanded(
               child: Column(
@@ -96,10 +132,14 @@ class _TMAppBarState extends State<TMAppBar> {
       return "Good Afternoon";
     } else if (now >= 17 && now < 21) {
       return "Good Evening";
-    } else if (now >= 21 && now < 5) {
-      return "Good Nignt";
     } else {
-      return "What's up";
+      return "Good Nignt";
     }
+    // else if (now >= 21 && now < 5) {
+    //   return "Good Nignt";
+    // }
+    // else {
+    //   return "What's up";
+    // }
   }
 }

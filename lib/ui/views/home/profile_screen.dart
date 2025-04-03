@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:task_manager/provider/image_provider.dart';
 import '../../widgets/profile_text_field.dart';
 import '../../widgets/tm_app_bar.dart';
 
@@ -73,7 +75,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           height: 30,
                         ),
                         Center(
-                          child: CircleAvatar(radius: 80, child: imageView()),
+                          child: Consumer<ImagePickProvider>(
+                            builder: (context, provider, child) {
+                              XFile? image = provider.profileImage;
+
+                              if (image == null) {
+                                return const CircleAvatar(
+                                  radius: 80,
+                                  child: Icon(
+                                    Icons.person,
+                                    size: 50,
+                                    color: Colors.grey,
+                                  ),
+                                );
+                              }
+
+                              return ClipOval(
+                                child: kIsWeb
+                                    ? Image.network(
+                                        image.path,
+                                        fit: BoxFit.cover,
+                                        width: 160,
+                                        height: 160,
+                                      )
+                                    : Image.file(
+                                        File(image.path),
+                                        fit: BoxFit.cover,
+                                        width: 160,
+                                        height: 160,
+                                      ),
+                              );
+                            },
+                          ),
                         ),
                         const SizedBox(
                           height: 10,
@@ -266,37 +299,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future _onUploadImage() async {
-    final picker = ImagePicker();
-    var image = await picker.pickImage(source: ImageSource.gallery);
+    var image = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (image != null) {
-      setState(() {
-        _image = image;
-      });
+      ImagePickProvider().updateProfileImage(image);
+      context.read<ImagePickProvider>().updateProfileImage(image);
     }
-  }
-
-  Widget imageView() {
-    return _image == null
-        ? const Icon(
-            Icons.photo,
-            size: 50,
-          )
-        : kIsWeb
-            ? ClipOval(
-                child: Image.network(
-                  _image!.path,
-                  fit: BoxFit.cover,
-                  height: 160,
-                  width: 160,
-                ),
-              )
-            : ClipOval(
-                child: Image.file(
-                  File(_image!.path),
-                  fit: BoxFit.cover,
-                  height: 160,
-                  width: 160,
-                ),
-              );
   }
 }
