@@ -1,5 +1,8 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../widgets/profile_text_field.dart';
 import '../../widgets/tm_app_bar.dart';
 
@@ -13,6 +16,8 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   bool _isNewObscure = true;
   bool _isConfirmObscre = true;
+  XFile? _image;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,24 +72,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         const SizedBox(
                           height: 30,
                         ),
-                        const Center(
-                          child: CircleAvatar(
-                            radius: 80,
-                            child: Icon(Icons.image),
-                          ),
+                        Center(
+                          child: CircleAvatar(radius: 80, child: imageView()),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                        ElevatedButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'UPLOAD YOUR IMAGE',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            )),
+                        ElevatedButton.icon(
+                          onPressed: _onUploadImage,
+                          label: const Text(
+                            'UPLOAD YOUR IMAGE',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          icon: const Icon(Icons.photo_library),
+                        ),
                         const SizedBox(
                           height: 30,
                         ),
@@ -255,5 +259,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     );
+  }
+
+  Future _onUploadImage() async {
+    final picker = ImagePicker();
+    var image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        _image = image;
+      });
+    }
+  }
+
+  Widget imageView() {
+    return _image == null
+        ? const Icon(
+            Icons.photo,
+            size: 50,
+          )
+        : kIsWeb
+            ? ClipOval(
+                child: Image.network(
+                  _image!.path,
+                  fit: BoxFit.cover,
+                  height: 160,
+                  width: 160,
+                ),
+              )
+            : ClipOval(
+                child: Image.file(
+                  File(_image!.path),
+                  fit: BoxFit.cover,
+                  height: 160,
+                  width: 160,
+                ),
+              );
   }
 }
