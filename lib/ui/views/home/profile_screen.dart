@@ -201,9 +201,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ProfileTextField(
                         hintText: 'New Password',
                         obscureText: _isNewObscure,
-                        prefixIcon: IconButton(
+                        suffixIcon: IconButton(
                             onPressed: () {
-                              _isNewObscure = !_isNewObscure;
+                              setState(() {
+                                _isNewObscure = !_isNewObscure;
+                              });
                             },
                             icon: Icon(_isNewObscure
                                 ? Icons.visibility_off
@@ -216,9 +218,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ProfileTextField(
                         hintText: 'Confirm Password',
                         obscureText: _isConfirmObscre,
-                        prefixIcon: IconButton(
+                        suffixIcon: IconButton(
                             onPressed: () {
-                              _isConfirmObscre = !_isConfirmObscre;
+                              setState(() {
+                                _isConfirmObscre = !_isConfirmObscre;
+                              });
                             },
                             icon: Icon(_isConfirmObscre
                                 ? Icons.visibility_off

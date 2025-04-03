@@ -91,9 +91,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     textInputAction: TextInputAction.done,
                     decoration: InputDecoration(
                         hintText: 'Password',
-                        prefixIcon: IconButton(
+                        suffixIcon: IconButton(
                             onPressed: () {
-                              _isObscure = !_isObscure;
+                              setState(() {
+                                _isObscure = !_isObscure;
+                              });
                             },
                             icon: Icon(_isObscure
                                 ? Icons.visibility_off

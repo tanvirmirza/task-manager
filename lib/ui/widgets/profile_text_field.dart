@@ -5,7 +5,7 @@ class ProfileTextField extends StatelessWidget {
   final String? hintText;
   final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
-  final Widget? prefixIcon;
+  final Widget? suffixIcon;
   final bool obscureText;
 
   const ProfileTextField(
@@ -14,7 +14,7 @@ class ProfileTextField extends StatelessWidget {
       this.hintText,
       this.textInputAction,
       this.keyboardType,
-      this.prefixIcon,
+      this.suffixIcon,
       this.obscureText = false});
 
   @override
@@ -32,7 +32,7 @@ class ProfileTextField extends StatelessWidget {
           keyboardType: keyboardType,
           style: Theme.of(context).textTheme.labelLarge,
           decoration: InputDecoration(
-            prefixIcon: prefixIcon,
+            suffixIcon: suffixIcon,
             enabledBorder:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
             hintText: hintText,
