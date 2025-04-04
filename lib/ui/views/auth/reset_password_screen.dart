@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/screen_background.dart';
-import 'login_screen.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   const ResetPasswordScreen({super.key});
@@ -101,18 +100,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   void _onTapSubmitButton() {
     if (_formKey.currentState?.validate() == true) {
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const LoginScreen()),
-          (pre) => false);
+      _onTapSignInButton();
     }
   }
 
   void _onTapSignInButton() {
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-        (pre) => false);
+    Navigator.pushNamedAndRemoveUntil(context, '/loginScreen', (pre) => false);
   }
 
   @override

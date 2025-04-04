@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:task_manager/ui/views/home/main_bottom_navbar_screen.dart';
+import 'ui/views/auth/forgot_password_pin_verify_screen.dart';
+import 'ui/views/auth/forgot_password_verify_screen.dart';
+import 'ui/views/auth/login_screen.dart';
+import 'ui/views/auth/register_screen.dart';
+import 'ui/views/auth/reset_password_screen.dart';
+import 'ui/views/home/main_bottom_navbar_screen.dart';
+import 'ui/views/home/profile_edit_screen.dart';
+import 'ui/views/splash/splash_screen.dart';
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -8,6 +16,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Task Manager',
         debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        routes: {
+          '/splash': (context) => const SplashScreen(),
+          '/loginScreen': (context) => const LoginScreen(),
+          '/registerScreen': (context) => const RegisterScreen(),
+          '/forgetPasswordVerifyScreen': (context) => const ForgotPasswordVerifyScreen(),
+          '/forgetPasswordPinVerifyScreen': (context) => const ForgotPasswordPinVerifyScreen(),
+          '/resetPasswordScreen': (context) => const ResetPasswordScreen(),
+          '/bottomNavScreen': (context) => const BottomNavBarScreen(),
+          '/profileEditScreen': (context) => const ProfileEditScreen(),
+        },
         theme: ThemeData(
           colorSchemeSeed: const Color.fromRGBO(35, 75, 118, 1),
           inputDecorationTheme: InputDecorationTheme(

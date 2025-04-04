@@ -145,8 +145,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void _onSubmitButton() {
-    if (_formKey.currentState?.validate() != true) {
-      return;
+    if (_formKey.currentState?.validate() == true) {
+      Navigator.pushNamedAndRemoveUntil(
+        context,'/bottomNavScreen',
+        (pre) => false,
+      );
     }
   }
 

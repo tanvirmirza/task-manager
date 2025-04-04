@@ -1,9 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/screen_background.dart';
-import 'forgot_password_verify_screen.dart';
-import '../home/main_bottom_navbar_screen.dart';
-import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -101,27 +98,22 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _onTapForgetPasswordButton() {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => const ForgotPasswordVerifyScreen()));
+    Navigator.pushNamed(context, '/loginScreen');
   }
 
   void _onTapSignUpButton() {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const RegisterScreen()));
+    Navigator.pushNamed(context, '/registerScreen');
   }
 
   void _onTapSingInButton() {
     if (_formKey.currentState?.validate() == true) {
       if (_emailTEController.text == 'test@mail.com' &&
           _passwordTEController.text == '000000') {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const BottomNavBarScreen()),
+        Navigator.pushNamedAndRemoveUntil(
+          context,'/bottomNavScreen',
           (pre) => false,
         );
-      } 
+      }
     }
   }
 
