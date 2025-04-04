@@ -2,8 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/screen_background.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'login_screen.dart';
-import 'reset_password_screen.dart';
 
 class ForgotPasswordPinVerifyScreen extends StatefulWidget {
   const ForgotPasswordPinVerifyScreen({super.key});
@@ -107,16 +105,14 @@ class _ForgotPasswordPinVerifyScreenState
   }
 
   void _onTapSignInButton() {
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-        (pre) => false);
+    Navigator.pushNamedAndRemoveUntil(context, '/loginScreen', (pre) => false);
   }
 
   void _onTapResetPasswordButton() {
     if (_formKey.currentState?.validate() == true) {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const ResetPasswordScreen()));
+      Navigator.pushNamed(
+        context,'/resetPasswordScreen',
+      );
     }
   }
 

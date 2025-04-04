@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager/ui/widgets/screen_background.dart';
-import '../auth/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,13 +13,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     _moveToNextPage();
-  }
-
-  Future<void> _moveToNextPage() async {
-    Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const LoginScreen()));
-    });
   }
 
   @override
@@ -50,5 +42,13 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _moveToNextPage() async {
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.pushReplacementNamed(
+        context,'/loginScreen',
+      );
+    });
   }
 }

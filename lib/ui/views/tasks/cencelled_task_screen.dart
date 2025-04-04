@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../widgets/task_card.dart';
 
 class CancelledTaskScreen extends StatefulWidget {

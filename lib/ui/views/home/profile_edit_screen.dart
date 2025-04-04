@@ -22,13 +22,18 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        forceMaterialTransparency: true,
+        elevation: 0,
         leading: IconButton(
           icon: const Icon(CupertinoIcons.back),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: const Text('Update Profile'),
+        title: const Text(
+          'Update Profile',
+          style: TextStyle(fontSize: 20),
+        ),
         centerTitle: true,
       ),
       backgroundColor: Colors.white,

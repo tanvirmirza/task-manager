@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/provider/image_provider.dart';
 import 'package:task_manager/ui/widgets/tm_app_bar.dart';
-
-import 'profile_edit_screen.dart';
 
 class ProfileViewScreen extends StatelessWidget {
   const ProfileViewScreen({super.key});
@@ -229,7 +226,7 @@ class ProfileViewScreen extends StatelessWidget {
   }
 
   void _onProfileEdit(BuildContext context) {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const ProfileEditScreen()));
+    Navigator.pushNamed(context,'/profileEditScreen',
+        );
   }
 }
