@@ -31,7 +31,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: GNav(
           curve: Curves.easeOutExpo,
-          duration: const Duration(milliseconds: 500),
+          duration: const Duration(milliseconds: 400),
           color: Colors.grey[800],
           activeColor: CustomBNColors.foregrounds[_selectedIndex],
           iconSize: 24,

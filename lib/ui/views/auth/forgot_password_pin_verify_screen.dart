@@ -32,17 +32,19 @@ class _ForgotPasswordPinVerifyScreenState
                   ),
                   Text(
                     'Pin Verification',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
                   ),
                   Text(
                     'A 6 digit verification pin has been send to your email.',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(color: Colors.grey),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Colors.black54,
+                        ),
                   ),
                   const SizedBox(
-                    height: 24,
+                    height: 32,
                   ),
                   PinCodeTextField(
                     length: 6,
@@ -61,15 +63,19 @@ class _ForgotPasswordPinVerifyScreenState
                     backgroundColor: Colors.transparent,
                     enableActiveFill: true,
                     controller: _pinCodeTEController,
+                    
                     validator: _validatePinCode,
                     appContext: context,
                   ),
                   const SizedBox(
                     height: 16,
                   ),
-                  ElevatedButton(
-                      onPressed: _onTapResetPasswordButton,
-                      child: const Text('Verify')),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        onPressed: _onTapResetPasswordButton,
+                        child: const Text('Verify',style: TextStyle(fontSize: 16),)),
+                  ),
                   const SizedBox(
                     height: 32,
                   ),

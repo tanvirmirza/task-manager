@@ -21,7 +21,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       body: ScreenBackground(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
             child: Form(
               key: _formKey,
               child: Column(
@@ -32,18 +32,19 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   ),
                   Text(
                     'Set Password',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
                   ),
+                  const SizedBox(height: 8),
                   Text(
                     'Set a new password minimum length of 6 letters.',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(color: Colors.grey),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Colors.black54,
+                        ),
                   ),
-                  const SizedBox(
-                    height: 24,
-                  ),
+                  const SizedBox(height: 32),
                   TextFormField(
                     controller: _newPasswordTEController,
                     textInputAction: TextInputAction.next,
@@ -51,9 +52,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     style: Theme.of(context).textTheme.labelLarge,
                     validator: _validatePassword,
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  const SizedBox(height: 16),
                   TextFormField(
                     controller: _confirmNewpasswordTEController,
                     textInputAction: TextInputAction.done,
@@ -65,9 +64,15 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   const SizedBox(
                     height: 16,
                   ),
-                  ElevatedButton(
-                      onPressed: _onTapSubmitButton,
-                      child: const Text('Confirm')),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        onPressed: _onTapSubmitButton,
+                        child: const Text(
+                          'Confirm',
+                          style: TextStyle(fontSize: 16),
+                        )),
+                  ),
                   const SizedBox(
                     height: 32,
                   ),

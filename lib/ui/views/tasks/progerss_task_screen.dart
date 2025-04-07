@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager/core/core.dart';
 
 import '../../widgets/task_card.dart';
 
@@ -16,11 +17,11 @@ class _ProgressTaskScreenState extends State<ProgressTaskScreen> {
       body: ListView.separated(
         itemCount: 6,
         itemBuilder: (context, index) {
-          return const TaskCard(
+          return TaskCard(
             taskStatus: TaskStatus.progress,
           );
         },
-        separatorBuilder: (context, index) => const SizedBox(height: 8),
+        separatorBuilder: (context, index) => const SizedBox(height: 2),
       ),
     );
   }
