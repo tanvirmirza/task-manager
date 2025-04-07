@@ -31,17 +31,20 @@ class _ForgotPasswordVerifyScreenState
                   ),
                   Text(
                     'Your Email Address',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
                   ),
+                  const SizedBox(height: 8),
                   Text(
                     'A 6 digit verification pin will be send to your email.',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(color: Colors.grey),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Colors.black54,
+                        ),
                   ),
                   const SizedBox(
-                    height: 24,
+                    height: 32,
                   ),
                   TextFormField(
                     controller: _emailTEController,
@@ -54,9 +57,15 @@ class _ForgotPasswordVerifyScreenState
                   const SizedBox(
                     height: 16,
                   ),
-                  ElevatedButton(
-                      onPressed: _onTapSubmitButton,
-                      child: const Icon(Icons.arrow_circle_right_outlined)),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        onPressed: _onTapSubmitButton,
+                        child: const Text(
+                        'Submit',
+                        style: TextStyle(fontSize: 16),
+                      ),),
+                  ),
                   const SizedBox(
                     height: 32,
                   ),

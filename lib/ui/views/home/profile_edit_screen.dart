@@ -67,12 +67,17 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               XFile? image = provider.profileImage;
 
                               if (image == null) {
-                                return const CircleAvatar(
+                                return CircleAvatar(
                                   radius: 80,
+                                  backgroundColor: Theme.of(context)
+                                      .colorScheme
+                                      .primary
+                                      .withOpacity(0.2),
                                   child: Icon(
                                     Icons.person,
                                     size: 50,
-                                    color: Colors.grey,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                 );
                               }

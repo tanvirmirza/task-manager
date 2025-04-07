@@ -3,14 +3,14 @@ import 'package:task_manager/core/core.dart';
 
 import '../../widgets/task_card.dart';
 
-class CompletedTaskScreen extends StatefulWidget {
-  const CompletedTaskScreen({super.key});
+class NewTaskScreen extends StatefulWidget {
+  const NewTaskScreen({super.key});
 
   @override
-  State<CompletedTaskScreen> createState() => _CompletedTaskScreenState();
+  State<NewTaskScreen> createState() => _NewTaskScreenState();
 }
 
-class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
+class _NewTaskScreenState extends State<NewTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +18,7 @@ class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
         itemCount: 6,
         itemBuilder: (context, index) {
           return TaskCard(
-            taskStatus: TaskStatus.completed,
+            taskStatus: TaskStatus.sNew,
           );
         },
         separatorBuilder: (context, index) => const SizedBox(height: 2),

@@ -21,8 +21,10 @@ class MyApp extends StatelessWidget {
           '/splash': (context) => const SplashScreen(),
           '/loginScreen': (context) => const LoginScreen(),
           '/registerScreen': (context) => const RegisterScreen(),
-          '/forgetPasswordVerifyScreen': (context) => const ForgotPasswordVerifyScreen(),
-          '/forgetPasswordPinVerifyScreen': (context) => const ForgotPasswordPinVerifyScreen(),
+          '/forgetPasswordVerifyScreen': (context) =>
+              const ForgotPasswordVerifyScreen(),
+          '/forgetPasswordPinVerifyScreen': (context) =>
+              const ForgotPasswordPinVerifyScreen(),
           '/resetPasswordScreen': (context) => const ResetPasswordScreen(),
           '/bottomNavScreen': (context) => const BottomNavBarScreen(),
           '/profileEditScreen': (context) => const ProfileEditScreen(),
@@ -34,7 +36,7 @@ class MyApp extends StatelessWidget {
                 color: Colors.grey, fontWeight: FontWeight.w500, fontSize: 15),
             hoverColor: Colors.white,
             filled: true,
-            fillColor: Colors.white,
+            fillColor: Colors.grey[200],
             contentPadding: const EdgeInsets.symmetric(horizontal: 16),
             errorBorder: _getBorderNone(),
             enabledBorder: _getBorderNone(),
@@ -42,23 +44,24 @@ class MyApp extends StatelessWidget {
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromRGBO(88, 134, 183, 1),
-                  foregroundColor: Colors.white,
                   fixedSize: const Size.fromWidth(double.maxFinite),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 18),
+                  backgroundColor: const Color.fromRGBO(35, 75, 118, 1),
+                  foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ))),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  elevation: 4)),
           textTheme: const TextTheme(
             titleLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
             labelLarge: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
           ),
         ),
-        home: const BottomNavBarScreen());
+        home: const SplashScreen());
   }
 
   OutlineInputBorder _getBorderNone() {
     return OutlineInputBorder(
-        borderSide: BorderSide.none, borderRadius: BorderRadius.circular(5));
+        borderSide: BorderSide.none, borderRadius: BorderRadius.circular(10));
   }
 }

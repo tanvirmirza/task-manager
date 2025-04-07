@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager/core/core.dart';
 import '../../widgets/task_card.dart';
 
 class CancelledTaskScreen extends StatefulWidget {
@@ -19,7 +20,7 @@ class _CancelledTaskScreenState extends State<CancelledTaskScreen> {
             taskStatus: TaskStatus.cancelled,
           );
         },
-        separatorBuilder: (context, index) => const SizedBox(height: 8),
+        separatorBuilder: (context, index) => const SizedBox(height: 2),
       ),
     );
   }

@@ -26,7 +26,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: ScreenBackground(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
             child: Form(
               key: _formKey,
               child: Column(
@@ -37,11 +37,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   Text(
                     'Join With Us',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
                   ),
-                  const SizedBox(
-                    height: 24,
+                  const SizedBox(height: 8),
+                  Text(
+                    'Create an account to get started',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Colors.black54,
+                        ),
                   ),
+                  const SizedBox(height: 32),
                   TextFormField(
                     controller: _emailTEController,
                     textInputAction: TextInputAction.next,
@@ -52,9 +60,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     style: Theme.of(context).textTheme.labelLarge,
                     validator: _validateEmail,
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  const SizedBox(height: 16),
                   TextFormField(
                     controller: _firstNameTEController,
                     textInputAction: TextInputAction.next,
@@ -62,9 +68,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     style: Theme.of(context).textTheme.labelLarge,
                     validator: (value) => _validateName(value, 'First Name'),
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  const SizedBox(height: 16),
                   TextFormField(
                     controller: _lastNameTEController,
                     textInputAction: TextInputAction.next,
@@ -72,20 +76,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     style: Theme.of(context).textTheme.labelLarge,
                     validator: (value) => _validateName(value, 'Last Name'),
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  const SizedBox(height: 16),
                   TextFormField(
                     controller: _mobileTEController,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.phone,
-                    decoration: const InputDecoration(hintText: 'Mobile'),
                     style: Theme.of(context).textTheme.labelLarge,
+                    decoration: const InputDecoration(hintText: 'Mobile'),
                     validator: _validateMobile,
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  const SizedBox(height: 16),
                   TextFormField(
                     controller: _passwordTEController,
                     textInputAction: TextInputAction.done,
@@ -107,9 +107,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(
                     height: 16,
                   ),
-                  ElevatedButton(
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
                       onPressed: _onSubmitButton,
-                      child: const Icon(Icons.arrow_circle_right_outlined)),
+                      child: const Text(
+                        'Sign Up',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ),
                   const SizedBox(
                     height: 32,
                   ),
@@ -123,7 +130,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             children: [
                           const TextSpan(text: "Already have an account? "),
                           TextSpan(
-                              text: "Sign Ip",
+                              text: "Sign In",
                               style: const TextStyle(
                                   color: Colors.green,
                                   fontWeight: FontWeight.bold),
@@ -147,7 +154,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void _onSubmitButton() {
     if (_formKey.currentState?.validate() == true) {
       Navigator.pushNamedAndRemoveUntil(
-        context,'/bottomNavScreen',
+        context,
+        '/bottomNavScreen',
         (pre) => false,
       );
     }
