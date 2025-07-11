@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -257,7 +256,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: "Update Docs",
                     progress: 0,
                     taskStatus: TaskStatus.upcoming,
-                    icon: Icons.update),
+                    icon: Icons.update
+                    ),
                 const TaskProgressTile(
                     title: "Plan Sprint",
                     progress: 0,
@@ -275,3 +275,4 @@ class _HomeScreenState extends State<HomeScreen> {
     return DateFormat('EEEE, MMMM d').format(dateTime);
   }
 }
+
