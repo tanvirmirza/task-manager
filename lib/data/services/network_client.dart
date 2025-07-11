@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
 import 'package:task_manager/app.dart';
-import 'package:task_manager/core/controllers/auth_controller.dart';
+import 'package:task_manager/controllers/auth_controller.dart';
 import 'package:task_manager/ui/views/auth/login_screen.dart';
 class NetworkResponse {
   final bool isSuccess;

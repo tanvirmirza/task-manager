@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import 'package:task_manager/core/controllers/auth_controller.dart';
+import 'package:task_manager/controllers/auth_controller.dart';
 import 'package:task_manager/data/models/login_model.dart';
 import 'package:task_manager/data/services/network_client.dart';
 import 'package:task_manager/data/utils/urls.dart';
