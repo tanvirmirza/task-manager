@@ -12,22 +12,25 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.6
-  http: ^1.2.2
-  provider: ^6.1.2
-  device_preview: ^1.1.0
-  shimmer: ^2.0.0
-  fluttertoast: ^8.2.8
-  google_fonts: ^6.2.1
-  flutter_svg: ^2.0.10
-  intl: ^0.18.1
-  pin_code_fields: ^8.0.1
-  logger: ^2.5.0
-  email_validator: ^3.0.0
-  google_nav_bar: ^5.0.7
-  percent_indicator: ^4.2.2
-  image_picker: ^1.1.2
-  introduction_screen: ^3.1.17
-  shared_preferences: ^2.2.3
+  http:
+  provider:
+  device_preview:
+  shimmer:
+  fluttertoast:
+  google_fonts:
+  flutter_svg:
+  intl:
+  pin_code_fields:
+  logger:
+  email_validator:
+  google_nav_bar:
+  percent_indicator:
+  image_picker:
+  introduction_screen:
+  flutter_screenutil:
+  shared_preferences:
+  mime:
+  dio:
   get: ^4.7.2
 
 
