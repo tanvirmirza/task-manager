@@ -1,12 +1,17 @@
 class AppUrls {
-  static const String baseUrl = 'https://hannanavtor-backend.vercel.app/api/v1';
+  static const String _baseUrl = 'http://35.73.30.144:2005/api/v1';
 
-  static const String webSocket = 'ws://10.0.20.16:4000';
+  static const String registerUrl = '$_baseUrl/Registration';
+  static const String loginUrl = '$_baseUrl/Login';
+  static const String updateProfileUrl = '$_baseUrl/ProfileUpdate';
+  static const String createTaskUrl = '$_baseUrl/createTask';
+  static const String taskStatusCountUrl = '$_baseUrl/taskStatusCount';
+  static const String newTaskListUrl = '$_baseUrl/listTaskByStatus/New';
+  static const String progressTaskListUrl = '$_baseUrl/listTaskByStatus/Progress';
+  static const String completedTaskListUrl = '$_baseUrl/listTaskByStatus/Completed';
+  static const String cancelledTaskListUrl = '$_baseUrl/listTaskByStatus/Cancelled';
 
-  static const String registerUrl = '$baseUrl/users/create';
-  static const String loginUrl = '$baseUrl/auth/login';
-  static const String notification = '$baseUrl/notifications';
+  static String updateTaskStatusUrl(String taskId, String status) => '$_baseUrl/updateTaskStatus/$taskId/$status';
 
-  static String contactProfileId(String id) =>
-      '$baseUrl/connections/contact-profile/$id';
+  static String deleteTaskUrl(String taskId) => '$_baseUrl/deleteTask/$taskId';
 }

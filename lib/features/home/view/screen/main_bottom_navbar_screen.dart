@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import '../../utils/custom_color.dart';
-import 'add_new_task_screen.dart';
+import 'package:task_manager/core/constants/custom_color.dart';
+import 'package:task_manager/features/profile/view/screen/profile_view_screen.dart';
+import 'package:task_manager/features/tasks/view/screen/add_new_task_screen.dart';
+import 'package:task_manager/features/tasks/view/screen/tab_status_screen.dart';
 import 'home_screen.dart';
-import 'profile_view_screen.dart';
-import 'tab_status_screen.dart';
 
 class BottomNavBarScreen extends StatefulWidget {
   const BottomNavBarScreen({super.key});

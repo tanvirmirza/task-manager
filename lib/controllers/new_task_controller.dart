@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-import 'package:task_manager/data/models/task_list_model.dart';
-import 'package:task_manager/data/models/task_model.dart';
+import 'package:task_manager/features/tasks/model/task_list_model.dart';
+import 'package:task_manager/features/tasks/model/task_model.dart';
 import 'package:task_manager/data/services/network_client.dart';
 import 'package:task_manager/data/utils/urls.dart';
 

@@ -1,6 +1,6 @@
 
 
-import 'package:task_manager/data/models/task_model.dart';
+import 'package:task_manager/features/tasks/model/task_model.dart';
 
 class TaskListModel {
   late final String status;

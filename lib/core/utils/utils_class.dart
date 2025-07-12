@@ -1,30 +1,56 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_feature_bites/core/constants/image_path.dart';
-import 'package:flutter_feature_bites/core/theme/app_colors.dart';
-
+import 'package:task_manager/core/constants/image_path.dart';
+import 'package:task_manager/core/theme/app_colors.dart';
 
 Widget buildProfileAvatar({
-  required String? imageUrl,
+  String? imageUrl,
+  File? imageFile,
   double? imageSize,
   double borderWidth = 2,
   Color borderColor = Colors.white,
 }) {
   final double size = imageSize ?? 40.0;
 
-  return Container(
-    width: size * 2,
-    height: size * 2,
-    decoration: BoxDecoration(
-      shape: BoxShape.circle,
-      border: Border.all(
-        color: borderColor,
-        width: borderWidth,
+  bool isNetworkUrl(String url) {
+    return url.startsWith('http://') || url.startsWith('https://');
+  }
+
+  Widget buildImage(Widget imageWidget) {
+    return Container(
+      width: size * 2,
+      height: size * 2,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: borderColor,
+          width: borderWidth,
+        ),
       ),
-    ),
-    child: ClipOval(
-      child: (imageUrl != null && imageUrl.isNotEmpty)
-          ? Image.network(
+      child: ClipOval(child: imageWidget),
+    );
+  }
+
+  if (imageFile != null) {
+    return buildImage(
+      Image.file(
+        imageFile,
+        width: size * 2,
+        height: size * 2,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          return Image.asset(
+            ImagePath.blankProfile,
+            width: size * 2,
+            height: size * 2,
+            fit: BoxFit.cover,
+          );
+        },
+      ),
+    );
+  } else if (imageUrl != null && imageUrl.isNotEmpty && isNetworkUrl(imageUrl)) {
+    return buildImage(
+      Image.network(
         imageUrl,
         width: size * 2,
         height: size * 2,
@@ -39,124 +65,27 @@ Widget buildProfileAvatar({
         },
         loadingBuilder: (context, child, loadingProgress) {
           if (loadingProgress == null) return child;
-          return Center(
-            child: CircularProgressIndicator(strokeWidth: 1.5, color: AppColors.white,),
+          return const Center(
+            child: CircularProgressIndicator(
+              strokeWidth: 1.5,
+              color: AppColors.white,
+            ),
           );
         },
-      )
-          : Image.asset(
+      ),
+    );
+  } else {
+    return buildImage(
+      Image.asset(
         ImagePath.blankProfile,
         width: size * 2,
         height: size * 2,
         fit: BoxFit.cover,
       ),
-    ),
-  );
-}
-
-
-
-
-Widget buildEditProfileAvatar({
-  String? imageUrl,
-  File? imageFile,
-  double? imageSize,
-  double borderWidth = 2,
-  Color borderColor = Colors.white,
-}) {
-  final double size = imageSize ?? 40.0;
-
-  bool isNetworkUrl(String url) {
-    return url.startsWith('http://') || url.startsWith('https://');
-  }
-
-  if (imageFile != null) {
-    // Use File image if available
-    return Container(
-      width: size * 2,
-      height: size * 2,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: borderColor,
-          width: borderWidth,
-        ),
-      ),
-      child: ClipOval(
-        child: Image.file(
-          imageFile,
-          width: size * 2,
-          height: size * 2,
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) {
-            return Image.asset(
-              ImagePath.blankProfile,
-              width: size * 2,
-              height: size * 2,
-              fit: BoxFit.cover,
-            );
-          },
-        ),
-      ),
-    );
-  } else if (imageUrl != null && imageUrl.isNotEmpty && isNetworkUrl(imageUrl)) {
-    // Use Network image if it's a valid URL
-    return Container(
-      width: size * 2,
-      height: size * 2,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: borderColor,
-          width: borderWidth,
-        ),
-      ),
-      child: ClipOval(
-        child: Image.network(
-          imageUrl,
-          width: size * 2,
-          height: size * 2,
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) {
-            return Image.asset(
-              ImagePath.blankProfile,
-              width: size * 2,
-              height: size * 2,
-              fit: BoxFit.cover,
-            );
-          },
-          loadingBuilder: (context, child, loadingProgress) {
-            if (loadingProgress == null) return child;
-            return Center(
-              child: CircularProgressIndicator(strokeWidth: 1.5,color: AppColors.white,),
-            );
-          },
-        ),
-      ),
-    );
-  } else {
-    // Fallback to asset image
-    return Container(
-      width: size * 2,
-      height: size * 2,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: borderColor,
-          width: borderWidth,
-        ),
-      ),
-      child: ClipOval(
-        child: Image.asset(
-          ImagePath.blankProfile,
-          width: size * 2,
-          height: size * 2,
-          fit: BoxFit.cover,
-        ),
-      ),
     );
   }
 }
+
 
 
 
@@ -178,6 +107,23 @@ Widget buildRefreshIndicator({
     child: child,
   );
 }
+
+enum TaskStatus { sNew, progress, completed, cancelled, upcoming }
+  // Get color based on task status
+   Color getStatusChipColor(TaskStatus status) {
+    switch (status) {
+      case TaskStatus.sNew:
+        return Colors.blue;
+      case TaskStatus.progress:
+        return Colors.purple;
+      case TaskStatus.completed:
+        return Colors.green;
+      case TaskStatus.cancelled:
+        return Colors.red;
+      case TaskStatus.upcoming:
+        return Colors.grey;
+    }
+  }
 
 
 

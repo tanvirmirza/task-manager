@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import '../../widgets/screen_background.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class ForgotPasswordPinVerifyScreen extends StatefulWidget {
