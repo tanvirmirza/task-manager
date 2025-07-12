@@ -15,11 +15,11 @@ class AppPages {
     GetPage(name: AppRoutes.login, page: () => LoginScreen()),
     GetPage(name: AppRoutes.register, page: () => RegisterScreen()),
     GetPage(
-        name: AppRoutes.verify, page: () => const ForgotPasswordVerifyScreen()),
+        name: AppRoutes.verify, page: () => ForgotPasswordVerifyScreen()),
     GetPage(
         name: AppRoutes.pinVerify,
-        page: () => const ForgotPasswordPinVerifyScreen()),
-    GetPage(name: AppRoutes.reset, page: () => const ResetPasswordScreen()),
+        page: () => ForgotPasswordPinVerifyScreen()),
+    GetPage(name: AppRoutes.reset, page: () => ResetPasswordScreen()),
     GetPage(name: AppRoutes.nav, page: () => const BottomNavBarScreen()),
     GetPage(name: AppRoutes.profileEdit, page: () => ProfileEditScreen()),
     // Add more routes here

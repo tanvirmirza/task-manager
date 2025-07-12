@@ -1,134 +1,94 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:task_manager/core/routes/app_routes.dart';
+import 'package:task_manager/core/utils/validator.dart';
+import 'package:task_manager/core/widgets/app_button.dart';
+import 'package:task_manager/core/widgets/app_text_field.dart';
 import 'package:task_manager/core/widgets/screen_background.dart';
+import 'package:task_manager/features/auth/controller/reset_password_controller.dart';
 
-class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({super.key});
+class ResetPasswordScreen extends StatelessWidget {
+  ResetPasswordScreen({super.key});
 
-  @override
-  State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
-}
+  final controller = Get.put(ResetPasswordController());
+  final validation = FormValidation();
 
-class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
-  final TextEditingController _newPasswordTEController =
-      TextEditingController();
-  final TextEditingController _confirmNewpasswordTEController =
-      TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ScreenBackground(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 80,
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
+          child: Form(
+            key: controller.formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 80),
+                Text(
+                  'Set Password',
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
                   ),
-                  Text(
-                    'Set Password',
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Set a new password minimum length of 6 letters.',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Colors.black54,
+                  ),
+                ),
+                const SizedBox(height: 32),
+                AppTextField(
+                  hintText: 'New Password',
+                  controller: controller.newPasswordController,
+                  textInputAction: TextInputAction.next,
+                  obscureText: true,
+                  validator: validation.validatePassword,
+                ),
+                const SizedBox(height: 16),
+                AppTextField(
+                  controller: controller.confirmPasswordController,
+                  textInputAction: TextInputAction.done,
+                  obscureText: true,
+                  hintText: 'Confirm New Password',
+                  validator: (value){
+                    validation.confirmPasswordValidator(value, controller.newPasswordController);
+                    return null;
+                  }
+                ),
+                const SizedBox(height: 16),
+                AppButton(text: 'Confirm', onTap: controller.onSubmit,),
+                const SizedBox(height: 32),
+                Center(
+                  child: RichText(
+                    text: TextSpan(
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      children: [
+                        const TextSpan(text: "Have account? "),
+                        TextSpan(
+                          text: "Sign In",
+                          style: const TextStyle(
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = ()=> Get.toNamed(AppRoutes.login),
                         ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Set a new password minimum length of 6 letters.',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.black54,
-                        ),
-                  ),
-                  const SizedBox(height: 32),
-                  TextFormField(
-                    controller: _newPasswordTEController,
-                    textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(hintText: 'New Password'),
-                    style: Theme.of(context).textTheme.labelLarge,
-                    validator: _validatePassword,
-                  ),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _confirmNewpasswordTEController,
-                    textInputAction: TextInputAction.done,
-                    decoration:
-                        const InputDecoration(hintText: 'Confirm New Password'),
-                    style: Theme.of(context).textTheme.labelLarge,
-                    validator: _validatePassword,
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                        onPressed: _onTapSubmitButton,
-                        child: const Text(
-                          'Confirm',
-                          style: TextStyle(fontSize: 16),
-                        )),
-                  ),
-                  const SizedBox(
-                    height: 32,
-                  ),
-                  Center(
-                    child: RichText(
-                        text: TextSpan(
-                            style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.black54,
-                                fontWeight: FontWeight.w600),
-                            children: [
-                          const TextSpan(text: "Have account? "),
-                          TextSpan(
-                              text: "Sign In",
-                              style: const TextStyle(
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.bold),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = _onTapSignInButton),
-                        ])),
-                  )
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
       ),
     );
-  }
-
-  void _onTapSubmitButton() {
-    if (_formKey.currentState?.validate() == true) {
-      _onTapSignInButton();
-    }
-  }
-
-  void _onTapSignInButton() {
-    Navigator.pushNamedAndRemoveUntil(context, '/loginScreen', (pre) => false);
-  }
-
-  @override
-  void dispose() {
-    _newPasswordTEController.dispose();
-    _confirmNewpasswordTEController.dispose();
-    super.dispose();
-  }
-
-  String? _validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Password cannot be empty';
-    } else if (value.length < 6) {
-      return 'Password must be at least 6 characters long';
-    } else if (_newPasswordTEController.text !=
-        _confirmNewpasswordTEController.text) {
-      return 'Passwords do not match';
-    }
-    return null;
   }
 }

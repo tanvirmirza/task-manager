@@ -9,10 +9,9 @@ import 'package:task_manager/core/widgets/screen_background.dart';
 import 'package:task_manager/features/auth/controller/login_controller.dart';
 
 class LoginScreen extends StatelessWidget {
-   LoginScreen({super.key});
+  LoginScreen({super.key});
   final controller = Get.put(LoginController());
   final validation = FormValidation();
-
 
   @override
   Widget build(BuildContext context) {
@@ -30,16 +29,16 @@ class LoginScreen extends StatelessWidget {
                   Text(
                     'Welcome Back!',
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     'Login to your account to continue',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Colors.black54,
-                    ),
+                          color: Colors.black54,
+                        ),
                   ),
                   const SizedBox(height: 32),
                   AppTextField(
@@ -47,11 +46,7 @@ class LoginScreen extends StatelessWidget {
                     controller: controller.emailController,
                     validator: validation.validateEmail,
                     textInputAction: TextInputAction.next,
-                    prefixIcon: IconButton(
-                      icon: const Icon(Icons.email_outlined),
-                      onPressed: () =>
-                      controller.emailController.text = 'example@mail.com',
-                    ),
+                    prefixIcon: const Icon(Icons.email_outlined),
                   ),
                   const SizedBox(height: 16),
                   AppTextField(
@@ -60,22 +55,17 @@ class LoginScreen extends StatelessWidget {
                     validator: validation.validatePassword,
                     textInputAction: TextInputAction.done,
                     obscureText: true,
-                    prefixIcon: IconButton(
-                      icon: const Icon(Icons.lock_outline),
-                      onPressed: () =>
-                      controller.passwordController.text = '01010101',
-                    ),
+                    prefixIcon: const Icon(Icons.lock_outline),
                   ),
                   const SizedBox(height: 16),
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: ()=> Get.toNamed(AppRoutes.verify),
+                      onPressed: () => Get.toNamed(AppRoutes.verify),
                       child: const Text('Forgot Password?'),
                     ),
                   ),
                   const SizedBox(height: 8),
-
                   Obx(() {
                     return AppButton(
                       text: 'Sign In',
@@ -83,7 +73,6 @@ class LoginScreen extends StatelessWidget {
                       isLoading: controller.isLoading.value,
                     );
                   }),
-
                   const SizedBox(height: 32),
                   Center(
                     child: RichText(
@@ -102,7 +91,7 @@ class LoginScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                             recognizer: TapGestureRecognizer()
-                              ..onTap = ()=>Get.toNamed(AppRoutes.register),
+                              ..onTap = () => Get.toNamed(AppRoutes.register),
                           ),
                         ],
                       ),
