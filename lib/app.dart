@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:task_manager/core/bindings/initial_binding.dart';
+import 'package:task_manager/core/routes/app_pages.dart';
+import 'package:task_manager/core/routes/app_routes.dart';
 import 'package:task_manager/core/theme/app_theme.dart';
-import 'package:task_manager/routes/app_pages.dart';
-import 'package:task_manager/routes/app_routes.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         getPages: AppPages.pages,
         initialRoute: AppRoutes.splash,
+        initialBinding: AppBinding(),
         theme: appTheme,
         );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:task_manager/core/constants/image_path.dart';
 
-import '../utils/assets_path.dart';
 
 class ScreenBackground extends StatelessWidget {
   
@@ -13,7 +13,7 @@ class ScreenBackground extends StatelessWidget {
       body: Stack(
         children: [
           SvgPicture.asset(
-            AssetsPaths.backgroundSvg,
+            ImagePath.backgroundSvg,
             width: double.maxFinite,
             height: double.maxFinite,
             fit: BoxFit.cover,

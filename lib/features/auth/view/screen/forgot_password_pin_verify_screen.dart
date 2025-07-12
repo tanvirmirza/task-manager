@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:task_manager/core/widgets/screen_background.dart';
 
 class ForgotPasswordPinVerifyScreen extends StatefulWidget {
   const ForgotPasswordPinVerifyScreen({super.key});

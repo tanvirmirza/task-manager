@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:task_manager/core/core.dart';
-
-import '../../widgets/task_card.dart';
+import 'package:task_manager/core/utils/utils_class.dart';
+import 'package:task_manager/features/tasks/view/widget/task_card.dart';
 
 class ProgressTaskScreen extends StatefulWidget {
   const ProgressTaskScreen({super.key});
@@ -17,7 +16,7 @@ class _ProgressTaskScreenState extends State<ProgressTaskScreen> {
       body: ListView.separated(
         itemCount: 6,
         itemBuilder: (context, index) {
-          return TaskCard(
+          return const TaskCard(
             taskStatus: TaskStatus.progress,
           );
         },

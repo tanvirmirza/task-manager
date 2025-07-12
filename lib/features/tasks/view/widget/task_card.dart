@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:task_manager/core/core.dart';
+import 'package:task_manager/core/utils/time_util.dart';
+import 'package:task_manager/core/utils/utils_class.dart';
 
 class TaskCard extends StatefulWidget {
   final TaskStatus taskStatus;
@@ -52,7 +53,7 @@ class _TaskCardState extends State<TaskCard> {
             ),
             const Spacer(),
             Text(
-              FuntionLogic.formatTimeAgo(DateTime.now()),
+              FunctionLogic.formatTimeAgo(DateTime.now()),
               style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
             ),
           ],
@@ -74,8 +75,7 @@ class _TaskCardState extends State<TaskCard> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
-                    color: FuntionLogic()
-                        .getStatusChipColor(widget.taskStatus)
+                    color: getStatusChipColor(widget.taskStatus)
                         .withOpacity(0.2),
                     borderRadius: BorderRadius.circular(16),
                   ),
@@ -89,7 +89,7 @@ class _TaskCardState extends State<TaskCard> {
                                 : 'Cancelled',
                     style: TextStyle(
                       color:
-                          FuntionLogic().getStatusChipColor(widget.taskStatus),
+                          getStatusChipColor(widget.taskStatus),
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
                     ),

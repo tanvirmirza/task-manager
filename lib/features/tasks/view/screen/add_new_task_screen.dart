@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../widgets/tm_app_bar.dart';
-
+import 'package:task_manager/core/widgets/tm_app_bar.dart';
 class Category {
   final IconData icon;
   final String text;

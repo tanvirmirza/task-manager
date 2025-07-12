@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:task_manager/core/core.dart';
+import 'package:task_manager/core/utils/time_util.dart';
+import 'package:task_manager/core/utils/utils_class.dart';
 
-class TaskProgressTile extends StatefulWidget {
+class TaskProgressTile extends StatelessWidget {
   const TaskProgressTile({
     super.key,
     required this.taskStatus,
@@ -15,11 +16,6 @@ class TaskProgressTile extends StatefulWidget {
   final double progress;
   final IconData icon;
 
-  @override
-  State<TaskProgressTile> createState() => _TaskProgressTileState();
-}
-
-class _TaskProgressTileState extends State<TaskProgressTile> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -37,31 +33,41 @@ class _TaskProgressTileState extends State<TaskProgressTile> {
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor:
-              Theme.of(context).colorScheme.primary.withOpacity(0.2),
-          child: Icon(widget.icon,
-              color: Theme.of(context).colorScheme.primary, size: 28),
+          Theme.of(context).colorScheme.primary.withOpacity(0.2),
+          child: Icon(
+            icon,
+            color: Theme.of(context).colorScheme.primary,
+            size: 28,
+          ),
         ),
-        title: Text(widget.title,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+        title: Text(
+          title,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 3),
-              child: LinearProgressIndicator(
-                  value: widget.progress,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: LinearProgressIndicator(
+                  value: progress,
                   color: Theme.of(context).colorScheme.primary,
                   backgroundColor:
-                      Theme.of(context).colorScheme.primary.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(10),
-                  minHeight: 6),
+                  Theme.of(context).colorScheme.primary.withOpacity(0.2),
+                  minHeight: 6,
+                ),
+              ),
             ),
             Row(
               children: [
                 const Icon(Icons.access_time, size: 14, color: Colors.grey),
                 const SizedBox(width: 4),
-                Text(FuntionLogic.formatTimeAgo(DateTime.now()),
-                    style: const TextStyle(fontSize: 12)),
+                Text(
+                  FunctionLogic.formatTimeAgo(DateTime.now()),
+                  style: const TextStyle(fontSize: 12),
+                ),
                 const SizedBox(width: 5),
               ],
             ),
@@ -70,27 +76,34 @@ class _TaskProgressTileState extends State<TaskProgressTile> {
         trailing: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
-            color: FuntionLogic()
-                .getStatusChipColor(widget.taskStatus)
-                .withOpacity(0.2),
+            color: getStatusChipColor(taskStatus).withOpacity(0.2),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Text(
-            widget.taskStatus == TaskStatus.sNew
-                ? 'New'
-                : widget.taskStatus == TaskStatus.progress
-                    ? 'Progress'
-                    : widget.taskStatus == TaskStatus.completed
-                        ? 'Completed'
-                        : widget.taskStatus == TaskStatus.cancelled
-                            ? 'Cancelled'
-                            : 'Upcoming',
+            _getStatusLabel(taskStatus),
             style: TextStyle(
-                color: FuntionLogic().getStatusChipColor(widget.taskStatus),
-                fontWeight: FontWeight.bold),
+              color: getStatusChipColor(taskStatus),
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
     );
+  }
+
+  String _getStatusLabel(TaskStatus status) {
+    switch (status) {
+      case TaskStatus.sNew:
+        return 'New';
+      case TaskStatus.progress:
+        return 'Progress';
+      case TaskStatus.completed:
+        return 'Completed';
+      case TaskStatus.cancelled:
+        return 'Cancelled';
+      case TaskStatus.upcoming:
+      default:
+        return 'Upcoming';
+    }
   }
 }

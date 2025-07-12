@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../widgets/tm_app_bar.dart';
-import '../tasks/cencelled_task_screen.dart';
-import '../tasks/completed_task_screen.dart';
-import '../tasks/new_task_screen.dart';
-import '../tasks/progerss_task_screen.dart';
+import 'package:task_manager/core/widgets/tm_app_bar.dart';
+import 'package:task_manager/features/tasks/view/screen/cencelled_task_screen.dart';
+import 'package:task_manager/features/tasks/view/screen/completed_task_screen.dart';
+import 'package:task_manager/features/tasks/view/screen/new_task_screen.dart';
+import 'package:task_manager/features/tasks/view/screen/progerss_task_screen.dart';
 
 class TabStatusScreen extends StatefulWidget {
   const TabStatusScreen({super.key});

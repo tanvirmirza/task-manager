@@ -12,8 +12,8 @@ import 'app_routes.dart';
 class AppPages {
   static final pages = [
     GetPage(name: AppRoutes.splash, page: () => const SplashScreen()),
-    GetPage(name: AppRoutes.login, page: () => const LoginScreen()),
-    GetPage(name: AppRoutes.register, page: () => const RegisterScreen()),
+    GetPage(name: AppRoutes.login, page: () => LoginScreen()),
+    GetPage(name: AppRoutes.register, page: () => RegisterScreen()),
     GetPage(
         name: AppRoutes.verify, page: () => const ForgotPasswordVerifyScreen()),
     GetPage(
@@ -21,7 +21,7 @@ class AppPages {
         page: () => const ForgotPasswordPinVerifyScreen()),
     GetPage(name: AppRoutes.reset, page: () => const ResetPasswordScreen()),
     GetPage(name: AppRoutes.nav, page: () => const BottomNavBarScreen()),
-    GetPage(name: AppRoutes.profileEdit, page: () => const ProfileEditScreen()),
+    GetPage(name: AppRoutes.profileEdit, page: () => ProfileEditScreen()),
     // Add more routes here
   ];
 }

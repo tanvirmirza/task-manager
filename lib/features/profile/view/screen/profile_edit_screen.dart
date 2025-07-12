@@ -1,22 +1,15 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
-import 'package:task_manager/provider/image_provider.dart';
-import '../../widgets/profile_text_field.dart';
+import 'package:get/get.dart';
+import 'package:task_manager/core/widgets/app_button.dart';
+import 'package:task_manager/core/widgets/app_text_field.dart';
+import 'package:task_manager/features/profile/view/controller/edit_profile_controller.dart';
 
-class ProfileEditScreen extends StatefulWidget {
-  const ProfileEditScreen({super.key});
+class ProfileEditScreen extends StatelessWidget {
+  ProfileEditScreen({super.key});
 
-  @override
-  State<ProfileEditScreen> createState() => _ProfileEditScreenState();
-}
-
-class _ProfileEditScreenState extends State<ProfileEditScreen> {
-  bool _isNewObscure = true;
-  bool _isConfirmObscre = true;
+  final controller = Get.put(ProfileEditController());
 
   @override
   Widget build(BuildContext context) {
@@ -25,276 +18,170 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
         forceMaterialTransparency: true,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(CupertinoIcons.back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: Get.back,
         ),
-        title: const Text(
-          'Update Profile',
-          style: TextStyle(fontSize: 20),
-        ),
+        title: const Text('Update Profile', style: TextStyle(fontSize: 20)),
         centerTitle: true,
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  boxShadow: const [
-                    BoxShadow(
-                        blurRadius: 4,
-                        color: Colors.black12,
-                        offset: Offset(0, 3)),
-                  ],
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.white,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(25.0),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Center(
-                          child: Consumer<ImagePickProvider>(
-                            builder: (context, provider, child) {
-                              XFile? image = provider.profileImage;
-
-                              if (image == null) {
-                                return CircleAvatar(
-                                  radius: 80,
-                                  backgroundColor: Theme.of(context)
-                                      .colorScheme
-                                      .primary
-                                      .withOpacity(0.2),
-                                  child: Icon(
-                                    Icons.person,
-                                    size: 50,
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                  ),
-                                );
-                              }
-
-                              return ClipOval(
-                                child: kIsWeb
-                                    ? Image.network(
-                                        image.path,
-                                        fit: BoxFit.cover,
-                                        width: 160,
-                                        height: 160,
-                                      )
-                                    : Image.file(
-                                        File(image.path),
-                                        fit: BoxFit.cover,
-                                        width: 160,
-                                        height: 160,
-                                      ),
-                              );
-                            },
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        ElevatedButton.icon(
-                          onPressed: _onUploadImage,
-                          label: const Text(
-                            'UPLOAD YOUR IMAGE',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          icon: const Icon(Icons.photo_library),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        const ProfileTextField(
-                          hintText: 'First Name',
-                          textInputAction: TextInputAction.next,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        const ProfileTextField(
-                          hintText: 'Last Name',
-                          textInputAction: TextInputAction.next,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        const ProfileTextField(
-                          hintText: 'Phone',
-                          textInputAction: TextInputAction.next,
-                          keyboardType: TextInputType.number,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        const ProfileTextField(
-                          hintText: 'Email',
-                          textInputAction: TextInputAction.done,
-                          keyboardType: TextInputType.emailAddress,
-                        ),
-                        const SizedBox(height: 25),
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'UPDATE',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              CupertinoIcons.delete,
-                              color: Colors.red,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              'DELETE ACCOUNT',
-                              style: TextStyle(
-                                color: Colors.red,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 16),
-                      ]),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  boxShadow: const [
-                    BoxShadow(
-                        blurRadius: 4,
-                        color: Colors.black12,
-                        offset: Offset(1, 2)),
-                  ],
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.white,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(25.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: Container(
-                          height: 40,
-                          width: double.maxFinite,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              boxShadow: const [
-                                BoxShadow(
-                                    blurRadius: 4,
-                                    color: Colors.black12,
-                                    offset: Offset(0, 2)),
-                              ],
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.white),
-                          child: const Text(
-                            'Change Your Password',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      ProfileTextField(
-                        hintText: 'New Password',
-                        obscureText: _isNewObscure,
-                        suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                _isNewObscure = !_isNewObscure;
-                              });
-                            },
-                            icon: Icon(_isNewObscure
-                                ? Icons.visibility_off
-                                : Icons.visibility)),
-                        textInputAction: TextInputAction.next,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      ProfileTextField(
-                        hintText: 'Confirm Password',
-                        obscureText: _isConfirmObscre,
-                        suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                _isConfirmObscre = !_isConfirmObscre;
-                              });
-                            },
-                            icon: Icon(_isConfirmObscre
-                                ? Icons.visibility_off
-                                : Icons.visibility)),
-                        textInputAction: TextInputAction.done,
-                      ),
-                      const SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'CHANGE PASSWORD',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Center(
-                        child: OutlinedButton.icon(
-                          onPressed: () {},
-                          label: const Text(
-                            'LOGOUT',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                            ),
-                          ),
-                          icon: const Icon(Icons.exit_to_app),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            _buildProfileCard(context),
+            const SizedBox(height: 20),
+            _buildPasswordCard(),
+          ],
         ),
       ),
     );
   }
 
-  Future _onUploadImage() async {
-    var image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      ImagePickProvider().updateProfileImage(image);
-      context.read<ImagePickProvider>().updateProfileImage(image);
-    }
+  Widget _buildProfileCard(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(25),
+      decoration: _cardDecoration(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 20),
+          Center(
+            child: Obx(() {
+              final image = controller.profileImage.value;
+              if (image == null) {
+                return CircleAvatar(
+                  radius: 80,
+                  backgroundColor:
+                      Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
+                  child: Icon(Icons.person,
+                      size: 50, color: Theme.of(context).colorScheme.primary),
+                );
+              }
+
+              return ClipOval(
+                child: kIsWeb
+                    ? Image.network(image.path,
+                        width: 160, height: 160, fit: BoxFit.cover)
+                    : Image.file(File(image.path),
+                        width: 160, height: 160, fit: BoxFit.cover),
+              );
+            }),
+          ),
+          const SizedBox(height: 10),
+          ElevatedButton.icon(
+            onPressed: controller.pickImage,
+            icon: const Icon(Icons.photo_library),
+            label: const Text('UPLOAD YOUR IMAGE'),
+          ),
+          const SizedBox(height: 30),
+          const AppTextField(hintText: 'First Name'),
+          const SizedBox(height: 20),
+          const AppTextField(hintText: 'Last Name'),
+          const SizedBox(height: 20),
+          const AppTextField(
+              hintText: 'Phone', keyboardType: TextInputType.phone),
+          const SizedBox(height: 20),
+          const AppTextField(
+              hintText: 'Email', keyboardType: TextInputType.emailAddress),
+          const SizedBox(height: 25),
+          AppButton(
+            text: 'UPDATE',
+            onTap: controller.updateProfile,
+          ),
+          const SizedBox(height: 16),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.delete_forever, color: Colors.red),
+              SizedBox(width: 5),
+              Text(
+                'DELETE ACCOUNT',
+                style:
+                    TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPasswordCard() {
+    return Container(
+      padding: const EdgeInsets.all(25),
+      decoration: _cardDecoration(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: Container(
+              height: 40,
+              width: double.infinity,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Colors.white,
+                boxShadow: const [
+                  BoxShadow(blurRadius: 4, color: Colors.black12),
+                ],
+              ),
+              child: const Text(
+                'Change Your Password',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          const SizedBox(height: 30),
+          Obx(() => AppTextField(
+                hintText: 'New Password',
+                obscureText: controller.isNewObscure.value,
+                textInputAction: TextInputAction.next,
+                suffixIcon: IconButton(
+                  icon: Icon(controller.isNewObscure.value
+                      ? Icons.visibility_off
+                      : Icons.visibility),
+                  onPressed: controller.toggleNewObscure,
+                ),
+              )),
+          const SizedBox(height: 20),
+          Obx(() => AppTextField(
+                hintText: 'Confirm Password',
+                obscureText: controller.isConfirmObscure.value,
+                textInputAction: TextInputAction.done,
+                suffixIcon: IconButton(
+                  icon: Icon(controller.isConfirmObscure.value
+                      ? Icons.visibility_off
+                      : Icons.visibility),
+                  onPressed: controller.toggleConfirmObscure,
+                ),
+              )),
+          const SizedBox(height: 16),
+          AppButton(
+            text: "CHANGE PASSWORD",
+            onTap: controller.changePassword,
+          ),
+          const SizedBox(height: 16),
+          Center(
+            child: OutlinedButton.icon(
+              onPressed: controller.logout,
+              icon: const Icon(Icons.logout),
+              label: const Text('LOGOUT'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  BoxDecoration _cardDecoration() {
+    return BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(5),
+      boxShadow: const [
+        BoxShadow(blurRadius: 4, color: Colors.black12, offset: Offset(0, 2)),
+      ],
+    );
   }
 }

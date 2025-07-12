@@ -15,10 +15,10 @@ class BottomNavBarScreen extends StatefulWidget {
 
 class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   int _selectedIndex = 0;
-  final List<Widget> _screens = const [
+  final List<Widget> _screens = [
     HomeScreen(),
-    AddNewTaskScreen(),
-    TabStatusScreen(),
+    const AddNewTaskScreen(),
+    const TabStatusScreen(),
     ProfileViewScreen()
   ];
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:task_manager/core/core.dart';
-
-import '../../widgets/task_card.dart';
+import 'package:task_manager/core/utils/utils_class.dart';
+import 'package:task_manager/features/tasks/view/widget/task_card.dart';
 
 class NewTaskScreen extends StatefulWidget {
   const NewTaskScreen({super.key});
@@ -17,7 +16,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
       body: ListView.separated(
         itemCount: 6,
         itemBuilder: (context, index) {
-          return TaskCard(
+          return const TaskCard(
             taskStatus: TaskStatus.sNew,
           );
         },
