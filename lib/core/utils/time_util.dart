@@ -93,6 +93,7 @@ class FunctionLogic {
   // Format ISO time to dd MMM yyyy
   static String dateTimeFormat(String isoTime) {
     final time = DateTime.parse(isoTime).toLocal();
-    return DateFormat('dd MMM yyyy').format(time);
+    return DateFormat('EEEE, MMMM d').format(time);
   }
+
 }

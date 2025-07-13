@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:task_manager/core/constants/custom_color.dart';
+import 'package:task_manager/features/home/controller/bottom_nav_controller.dart';
 import 'package:task_manager/features/profile/view/screen/profile_view_screen.dart';
 import 'package:task_manager/features/tasks/view/screen/add_new_task_screen.dart';
 import 'package:task_manager/features/tasks/view/screen/tab_status_screen.dart';
 import 'home_screen.dart';
+class BottomNavBarScreen extends StatelessWidget {
+  BottomNavBarScreen({super.key});
 
-class BottomNavBarScreen extends StatefulWidget {
-  const BottomNavBarScreen({super.key});
+  final controller = Get.put(BottomNavController());
 
-  @override
-  State<BottomNavBarScreen> createState() => _BottomNavBarScreenState();
-}
-
-class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
-  int _selectedIndex = 0;
-  final List<Widget> _screens = [
+  final List<Widget> screens = [
     HomeScreen(),
     const AddNewTaskScreen(),
     const TabStatusScreen(),
@@ -24,8 +21,8 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: _screens[_selectedIndex]),
+    return Obx(() => Scaffold(
+      body: screens[controller.selectedIndex.value],
       bottomNavigationBar: Container(
         color: Colors.white,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -33,16 +30,15 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
           curve: Curves.easeOutExpo,
           duration: const Duration(milliseconds: 400),
           color: Colors.grey[800],
-          activeColor: CustomBNColors.foregrounds[_selectedIndex],
+          activeColor:
+          CustomBNColors.foregrounds[controller.selectedIndex.value],
           iconSize: 24,
-          tabBackgroundColor: CustomBNColors.backgrounds[_selectedIndex],
+          tabBackgroundColor: CustomBNColors
+              .backgrounds[controller.selectedIndex.value],
           padding: const EdgeInsets.all(15),
           gap: 8,
-          selectedIndex: _selectedIndex,
-          onTabChange: (value) {
-            _selectedIndex = value;
-            setState(() {});
-          },
+          selectedIndex: controller.selectedIndex.value,
+          onTabChange: controller.updateIndex,
           tabs: const [
             GButton(
               icon: Icons.home_filled,
@@ -63,6 +59,6 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
           ],
         ),
       ),
-    );
+    ));
   }
 }
