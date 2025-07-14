@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:task_manager/core/utils/time_util.dart';
 
 class TMAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const TMAppBar({
+  TMAppBar({
     super.key,
     this.fromProfileScreen = false,
     this.elevation,
@@ -19,6 +19,8 @@ class TMAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  final FunctionLogic logic = FunctionLogic();
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +71,7 @@ class TMAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
                 Text(
-                  FunctionLogic.showGreetings(),
+                  logic.showGreetings(),
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: Theme.of(context).colorScheme.onBackground,
                   ),

@@ -13,14 +13,14 @@ class ProfileViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const TMAppBar(fromProfileScreen: true),
+      appBar: TMAppBar(fromProfileScreen: true),
       body: LayoutBuilder(builder: (context, constraints) {
         return SingleChildScrollView(
           child: ConstrainedBox(
             constraints: BoxConstraints(minWidth: constraints.maxWidth),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Obx(() => Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildProfileImage(context),
@@ -28,12 +28,17 @@ class ProfileViewScreen extends StatelessWidget {
                   const Center(
                     child: Column(
                       children: [
-                        Text("Mirza Tanvir",
-                            style: TextStyle(
-                                fontSize: 28, fontWeight: FontWeight.bold)),
-                        Text("mirzatanvir74@gmail.com",
-                            style:
-                            TextStyle(fontSize: 16, color: Colors.grey)),
+                        Text(
+                          "Mirza Tanvir",
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          "mirzatanvir74@gmail.com",
+                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                        ),
                       ],
                     ),
                   ),
@@ -80,10 +85,11 @@ class ProfileViewScreen extends StatelessWidget {
                       Expanded(
                         child: ElevatedButton.icon(
                           onPressed: controller.logout,
-                          label: const Text('LOGOUT',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600)),
+                          label: const Text(
+                            'LOGOUT',
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w600),
+                          ),
                           icon: const Icon(Icons.logout),
                         ),
                       ),
@@ -91,17 +97,18 @@ class ProfileViewScreen extends StatelessWidget {
                       Expanded(
                         child: ElevatedButton.icon(
                           onPressed: controller.goToEdit,
-                          label: const Text('EDIT',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600)),
+                          label: const Text(
+                            'EDIT',
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w600),
+                          ),
                           icon: const Icon(Icons.edit),
                         ),
                       ),
                     ],
-                  )
+                  ),
                 ],
-              )),
+              ),
             ),
           ),
         );
@@ -118,17 +125,27 @@ class ProfileViewScreen extends StatelessWidget {
             return CircleAvatar(
               radius: 90,
               backgroundColor:
-              Theme.of(context).colorScheme.primary.withOpacity(0.2),
+              Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
               child: ClipOval(
                 child: image == null
-                    ? Icon(Icons.person,
-                    size: 80,
-                    color: Theme.of(context).colorScheme.primary)
+                    ? Icon(
+                  Icons.person,
+                  size: 80,
+                  color: Theme.of(context).colorScheme.primary,
+                )
                     : kIsWeb
-                    ? Image.network(image.path,
-                    width: 180, height: 180, fit: BoxFit.cover)
-                    : Image.file(File(image.path),
-                    width: 180, height: 180, fit: BoxFit.cover),
+                    ? Image.network(
+                  image.path,
+                  width: 180,
+                  height: 180,
+                  fit: BoxFit.cover,
+                )
+                    : Image.file(
+                  File(image.path),
+                  width: 180,
+                  height: 180,
+                  fit: BoxFit.cover,
+                ),
               ),
             );
           }),
@@ -165,19 +182,19 @@ class ProfileViewScreen extends StatelessWidget {
     return Card(
       elevation: 0.5,
       surfaceTintColor: Colors.white,
-      shadowColor: Colors.grey.withOpacity(0.3),
+      shadowColor: Colors.grey.withValues(alpha: 0.3),
       margin: const EdgeInsets.only(bottom: 8),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
-          color: Colors.grey.withOpacity(0.1),
+          color: Colors.grey.withValues(alpha: 0.1),
           width: 1,
         ),
       ),
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor:
-          Theme.of(context).colorScheme.primary.withOpacity(0.2),
+          Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
           child: Icon(icon, color: Theme.of(context).colorScheme.primary),
         ),
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
@@ -191,21 +208,23 @@ class ProfileViewScreen extends StatelessWidget {
     return Card(
       elevation: 0.5,
       surfaceTintColor: Colors.white,
-      shadowColor: Colors.grey.withOpacity(0.3),
+      shadowColor: Colors.grey.withValues(alpha: 0.3),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
-        side: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1),
+        side: BorderSide(color: Colors.grey.withValues(alpha: 0.1), width: 1),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 12.0),
         child: Column(
           children: [
-            Text(value,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24,
-                  color: Theme.of(context).colorScheme.primary,
-                )),
+            Text(
+              value,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
             Text(label,
                 style: const TextStyle(fontSize: 12, color: Colors.grey)),
           ],

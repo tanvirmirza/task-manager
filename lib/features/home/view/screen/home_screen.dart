@@ -12,6 +12,8 @@ class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   final controller = Get.put(HomeController());
 
+  final FunctionLogic logic = FunctionLogic();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,7 +127,7 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
              Text(
-              FunctionLogic.showGreetings.toString(),
+              logic.showGreetings(),
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

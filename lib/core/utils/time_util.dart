@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 
 class FunctionLogic {
   // Greeting based on time of day
-  static String showGreetings() {
+   String showGreetings() {
     int hour = DateTime.now().hour;
     if (hour >= 5 && hour < 12) {
       return "Good Morning";

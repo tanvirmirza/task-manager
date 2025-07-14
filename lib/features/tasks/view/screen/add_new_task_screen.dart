@@ -33,7 +33,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: const TMAppBar(),
+      appBar: TMAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(18),
         child: ListView(

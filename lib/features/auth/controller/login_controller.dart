@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:task_manager/core/routes/app_routes.dart';
 
 class LoginController extends GetxController {
   final emailController = TextEditingController();
@@ -17,8 +18,8 @@ class LoginController extends GetxController {
       isLoading.value = false;
 
       if (emailController.text == 'example@mail.com' &&
-          passwordController.text == '01010101') {
-        Get.offAllNamed('/bottomNavScreen');
+          passwordController.text == 'P@ssw0rd') {
+        Get.toNamed(AppRoutes.nav);
       } else {
         Get.snackbar('Error', 'Invalid credentials',
             snackPosition: SnackPosition.BOTTOM);
