@@ -1,230 +1,224 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
-import 'package:dio/dio.dart';
-import 'package:http_parser/http_parser.dart';
-import 'package:mime/mime.dart';
-import 'package:path/path.dart' as path;
-import 'package:task_manager/core/api/model/api_response_dio.dart';
+import 'package:http/http.dart' as http;
+import 'package:task_manager/core/api/model/api_response.dart';
 import 'package:task_manager/core/utils/logger.dart';
 
 class NetworkCaller {
-  static final Dio _dio = Dio(
-    BaseOptions(
-      baseUrl: "https://your-api.com/api/v1",
-      connectTimeout: const Duration(seconds: 20),
-      receiveTimeout: const Duration(seconds: 20),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    ),
-  );
+  static const int timeoutDuration = 80;
 
-  static void setAuthToken(String token) {
-    AppLoggerHelper.info('🔐 Set Auth Token');
-    _dio.options.headers['Authorization'] = 'Bearer $token';
+  // Helper to build headers with optional token
+  static Map<String, String> _buildHeaders({String? token, bool isJson = true}) {
+    final headers = <String, String>{};
+    if (isJson) {
+      headers['Content-Type'] = 'application/json';
+    }
+    if (token != null && token.isNotEmpty) {
+      headers['token'] = token;
+
+      AppLoggerHelper.debug('Request headers: $headers');
+    }
+    return headers;
   }
 
-  static void removeAuthToken() {
-    AppLoggerHelper.info('🚫 Remove Auth Token');
-    _dio.options.headers.remove('Authorization');
-  }
-
-  static Future<ApiResponse> get(String url, {Map<String, dynamic>? params}) async {
+  // GET request
+  static Future<ResponseData> getRequest(String url, {String? token}) async {
+    AppLoggerHelper.info('GET Request: $url');
     try {
-      AppLoggerHelper.info('🌐 GET Request: $url');
-      AppLoggerHelper.debug('Query: $params');
-      final response = await _dio.get(url, queryParameters: params);
+      final response = await http
+          .get(Uri.parse(url), headers: _buildHeaders(token: token))
+          .timeout(const Duration(seconds: timeoutDuration));
+
+      log('GET Headers: ${response.headers}');
+      log('GET Status: ${response.statusCode}');
+      log('GET Body: ${response.body}');
       return _handleResponse(response);
     } catch (e) {
       return _handleError(e);
     }
   }
 
-  static Future<ApiResponse> post(String url, {Map<String, dynamic>? body}) async {
-    try {
-      AppLoggerHelper.info('📤 POST Request: $url');
-      AppLoggerHelper.debug('Body: $body');
-      final response = await _dio.post(url, data: body);
-      return _handleResponse(response);
-    } catch (e) {
-      return _handleError(e);
-    }
-  }
-
-  static Future<ApiResponse> postFormUrlEncoded(String url, Map<String, dynamic> body) async {
-    try {
-      AppLoggerHelper.info('📤 POST (form-urlencoded): $url');
-      AppLoggerHelper.debug('Body: $body');
-      final response = await _dio.post(
-        url,
-        data: body,
-        options: Options(contentType: Headers.formUrlEncodedContentType),
-      );
-      return _handleResponse(response);
-    } catch (e) {
-      return _handleError(e);
-    }
-  }
-
-  static Future<ApiResponse> put(String url, {Map<String, dynamic>? body}) async {
-    try {
-      AppLoggerHelper.info('✏️ PUT Request: $url');
-      AppLoggerHelper.debug('Body: $body');
-      final response = await _dio.put(url, data: body);
-      return _handleResponse(response);
-    } catch (e) {
-      return _handleError(e);
-    }
-  }
-
-  static Future<ApiResponse> delete(String url) async {
-    try {
-      AppLoggerHelper.info('🗑️ DELETE Request: $url');
-      final response = await _dio.delete(url);
-      return _handleResponse(response);
-    } catch (e) {
-      return _handleError(e);
-    }
-  }
-
-  static Future<ApiResponse> patch(String url, {Map<String, dynamic>? body}) async {
-    try {
-      AppLoggerHelper.info('🩹 PATCH Request: $url');
-      AppLoggerHelper.debug('Body: $body');
-      final response = await _dio.patch(url, data: body);
-      return _handleResponse(response);
-    } catch (e) {
-      return _handleError(e);
-    }
-  }
-
-  static Future<ApiResponse> patchWithoutBody(String url) async {
-    try {
-      AppLoggerHelper.info('🩹 PATCH (No Body): $url');
-      final response = await _dio.patch(url);
-      return _handleResponse(response);
-    } catch (e) {
-      return _handleError(e);
-    }
-  }
-
-  static Future<ApiResponse> uploadSingleImage(
-      String url,
-      File imageFile, {
+  // POST request
+  static Future<ResponseData> postRequest(
+      String url, {
         Map<String, dynamic>? body,
-        String fieldName = "avatar",
+        String? token,
       }) async {
+    AppLoggerHelper.info('POST Request: $url');
+    AppLoggerHelper.info('POST Body: ${jsonEncode(body)}');
     try {
-      AppLoggerHelper.info('📸 Upload Single Image to: $url');
-      final mimeType = lookupMimeType(imageFile.path);
-      final formData = FormData.fromMap({
-        if (body != null) ...body,
-        fieldName: await MultipartFile.fromFile(
-          imageFile.path,
-          filename: path.basename(imageFile.path),
-          contentType: MediaType.parse(mimeType ?? 'image/jpeg'),
-        ),
-      });
+      final response = await http
+          .post(Uri.parse(url),
+          headers: _buildHeaders(token: token),
+          body: jsonEncode(body))
+          .timeout(const Duration(seconds: timeoutDuration));
 
-      final response = await _dio.put(url, data: formData);
+      log('POST Status: ${response.statusCode}');
+      log('POST Body: ${response.body}');
       return _handleResponse(response);
     } catch (e) {
       return _handleError(e);
     }
   }
 
-  static Future<ApiResponse> uploadTwoImages(
-      String url,
-      File front,
-      File back, {
+  // PUT request
+  static Future<ResponseData> putRequest(
+      String url, {
         Map<String, dynamic>? body,
-        String field1 = "IDCardFont",
-        String field2 = "IDCardBack",
+        String? token,
       }) async {
+    AppLoggerHelper.info('PUT Request: $url');
+    AppLoggerHelper.info('PUT Body: ${jsonEncode(body)}');
     try {
-      AppLoggerHelper.info('📸 Upload Two Images to: $url');
-      final formData = FormData.fromMap({
-        if (body != null) ...body,
-        field1: await MultipartFile.fromFile(front.path, filename: path.basename(front.path)),
-        field2: await MultipartFile.fromFile(back.path, filename: path.basename(back.path)),
-      });
+      final response = await http
+          .put(Uri.parse(url),
+          headers: _buildHeaders(token: token),
+          body: jsonEncode(body))
+          .timeout(const Duration(seconds: timeoutDuration));
 
-      final response = await _dio.patch(url, data: formData);
+      log('PUT Status: ${response.statusCode}');
+      log('PUT Body: ${response.body}');
       return _handleResponse(response);
     } catch (e) {
       return _handleError(e);
     }
   }
 
-  static Future<ApiResponse> uploadMultipleImages(
-      String url,
-      List<File> files, {
-        Map<String, dynamic>? body,
-      }) async {
+  // DELETE request
+  static Future<ResponseData> deleteRequest(String url, {String? token}) async {
+    AppLoggerHelper.info('DELETE Request: $url');
     try {
-      AppLoggerHelper.info('📸 Upload Multiple Images to: $url');
-      final formData = FormData();
+      final response = await http
+          .delete(Uri.parse(url), headers: _buildHeaders(token: token))
+          .timeout(const Duration(seconds: timeoutDuration));
 
-      if (body != null) {
-        body.forEach((key, value) {
-          formData.fields.add(MapEntry(key, value.toString()));
-        });
-      }
+      log('DELETE Status: ${response.statusCode}');
+      log('DELETE Body: ${response.body}');
+      return _handleResponse(response);
+    } catch (e) {
+      return _handleError(e);
+    }
+  }
 
-      for (var file in files) {
-        final mimeType = lookupMimeType(file.path) ?? 'application/octet-stream';
-        formData.files.add(
-          MapEntry(
-            'files[]',
-            await MultipartFile.fromFile(
-              file.path,
-              filename: path.basename(file.path),
-              contentType: MediaType.parse(mimeType),
-            ),
-          ),
+  // PATCH request
+  static Future<ResponseData> patchRequest(
+      String url, {
+        Map<String, dynamic>? body,
+        String? token,
+      }) async {
+    AppLoggerHelper.info('PATCH Request: $url');
+    AppLoggerHelper.info('PATCH Body: ${jsonEncode(body)}');
+    try {
+      final response = await http
+          .patch(Uri.parse(url),
+          headers: _buildHeaders(token: token),
+          body: jsonEncode(body))
+          .timeout(const Duration(seconds: timeoutDuration));
+
+      log('PATCH Status: ${response.statusCode}');
+      log('PATCH Body: ${response.body}');
+      return _handleResponse(response);
+    } catch (e) {
+      return _handleError(e);
+    }
+  }
+
+  // Handle response common for all requests
+  static ResponseData _handleResponse(http.Response response) {
+    AppLoggerHelper.info('Response Status: ${response.statusCode}');
+    AppLoggerHelper.info('Response Body: ${response.body}');
+
+    dynamic decodedResponse;
+    try {
+      decodedResponse = jsonDecode(response.body);
+    } catch (_) {
+      decodedResponse = null;
+    }
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      if (decodedResponse is Map && decodedResponse['status'] == 'success') {
+        return ResponseData(
+          isSuccess: true,
+          statusCode: response.statusCode,
+          responseData: {
+            "data": decodedResponse['data'],
+            "token": decodedResponse['token']
+          },
+          errorMessage: '',
+        );
+      } else {
+        return ResponseData(
+          isSuccess: false,
+          statusCode: response.statusCode,
+          responseData: decodedResponse,
+          errorMessage: decodedResponse?['message'] ?? 'Unexpected format received',
         );
       }
-
-      final response = await _dio.post(url, data: formData);
-      return _handleResponse(response);
-    } catch (e) {
-      return _handleError(e);
+    } else if (response.statusCode == 400) {
+      return ResponseData(
+        isSuccess: false,
+        statusCode: 400,
+        responseData: decodedResponse,
+        errorMessage: _extractErrorMessages(decodedResponse?['errorSources']),
+      );
+    } else if (response.statusCode == 401) {
+      return ResponseData(
+        isSuccess: false,
+        statusCode: 401,
+        responseData: decodedResponse,
+        errorMessage: 'Unauthorized access - please login again.',
+      );
+    } else if (response.statusCode == 500) {
+      return ResponseData(
+        isSuccess: false,
+        statusCode: 500,
+        responseData: decodedResponse,
+        errorMessage: decodedResponse?['message'] ?? 'An unexpected server error occurred!',
+      );
+    } else {
+      return ResponseData(
+        isSuccess: false,
+        statusCode: response.statusCode,
+        responseData: decodedResponse,
+        errorMessage: decodedResponse?['message'] ?? 'An unknown error occurred',
+      );
     }
   }
 
-  static ApiResponse _handleResponse(Response response) {
-    AppLoggerHelper.info('✅ Response ${response.statusCode}: ${response.requestOptions.uri}');
-    AppLoggerHelper.debug('Response Body: ${response.data}');
 
-    final data = response.data;
-    return ApiResponse(
-      isSuccess: (response.statusCode == 200 || response.statusCode == 201),
-      statusCode: response.statusCode,
-      data: data['result'] ?? data,
-      errorMessage: data['message'] ?? '',
-    );
+  static String _extractErrorMessages(dynamic errorSources) {
+    if (errorSources is List) {
+      return errorSources.map((e) => e['message'] ?? 'Unknown error').join(', ');
+    }
+    return 'Validation error';
   }
 
-  static ApiResponse _handleError(dynamic error) {
-    AppLoggerHelper.error('❌ Dio Error: $error');
+  // Handle errors thrown during requests
+  static ResponseData _handleError(dynamic error) {
+    AppLoggerHelper.error('Request Error: $error');
 
-    if (error is DioException) {
-      final res = error.response;
-      AppLoggerHelper.warning(
-          'DioException [${res?.statusCode}] - ${res?.requestOptions.uri} - ${res?.data}');
-      return ApiResponse(
+    if (error is SocketException) {
+      return ResponseData(
         isSuccess: false,
-        statusCode: res?.statusCode,
-        data: res?.data,
-        errorMessage: res?.data?['message'] ?? error.message ?? 'Request failed',
+        statusCode: 0,
+        responseData: null,
+        errorMessage: 'Network error occurred. Please check your connection.',
+      );
+    } else if (error is TimeoutException) {
+      return ResponseData(
+        isSuccess: false,
+        statusCode: 408,
+        responseData: null,
+        errorMessage: 'Request timeout. Please try again later.',
       );
     } else {
-      AppLoggerHelper.error("Unhandled Exception: $error");
-      return ApiResponse(
+      return ResponseData(
         isSuccess: false,
-        statusCode: 500,
-        data: null,
-        errorMessage: 'Unexpected error occurred',
+        statusCode: 0,
+        responseData: null,
+        errorMessage: 'Unexpected error occurred.',
       );
     }
   }

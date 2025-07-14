@@ -11,7 +11,7 @@ import 'package:task_manager/features/auth/controller/forgot_password_pin_verify
 class ForgotPasswordPinVerifyScreen extends StatelessWidget {
   ForgotPasswordPinVerifyScreen({super.key});
 
-  final controller = Get.put(ForgotPasswordPinVerifyController());
+  final controller = Get.find<ForgotPasswordPinVerifyController>();
   final validation = FormValidation();
 
   @override

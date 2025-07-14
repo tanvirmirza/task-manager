@@ -8,7 +8,7 @@ import 'package:task_manager/features/profile/view/controller/profile_view_contr
 class ProfileViewScreen extends StatelessWidget {
   ProfileViewScreen({super.key});
 
-  final controller = Get.put(ProfileViewController());
+  final controller = Get.find<ProfileViewController>();
 
   @override
   Widget build(BuildContext context) {

@@ -12,7 +12,7 @@ import 'package:task_manager/features/auth/controller/register_controller.dart';
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({super.key});
 
-  final controller = Get.put(RegisterController());
+  final controller = Get.find<RegisterController>();
   final validation = FormValidation();
 
   @override

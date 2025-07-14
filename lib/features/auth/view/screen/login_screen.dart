@@ -10,7 +10,7 @@ import 'package:task_manager/features/auth/controller/login_controller.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
-  final controller = Get.put(LoginController());
+  final controller = Get.find<LoginController>();
   final validation = FormValidation();
 
   @override

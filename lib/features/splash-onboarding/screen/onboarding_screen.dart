@@ -6,7 +6,7 @@ import 'package:task_manager/features/splash-onboarding/controller/onboarding_co
 class OnboardingScreen extends StatelessWidget {
   OnboardingScreen({super.key});
 
-  final controller = Get.put(OnboardingController());
+  final controller = Get.find<OnboardingController>();
 
   @override
   Widget build(BuildContext context) {

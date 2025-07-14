@@ -10,11 +10,11 @@ import 'home_screen.dart';
 class BottomNavBarScreen extends StatelessWidget {
   BottomNavBarScreen({super.key});
 
-  final controller = Get.put(BottomNavController());
+  final controller = Get.find<BottomNavController>();
 
   final List<Widget> screens = [
     HomeScreen(),
-    const AddNewTaskScreen(),
+    AddNewTaskScreen(),
     const TabStatusScreen(),
     ProfileViewScreen()
   ];

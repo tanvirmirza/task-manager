@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:task_manager/core/routes/app_routes.dart';
 
 class ProfileViewController extends GetxController {
   Rx<XFile?> profileImage = Rx<XFile?>(null);
@@ -13,10 +14,10 @@ class ProfileViewController extends GetxController {
   }
 
   void logout() {
-    Get.offAllNamed('/login');
+    Get.offAllNamed(AppRoutes.login);
   }
 
   void goToEdit() {
-    Get.toNamed('/profileEditScreen');
+    Get.toNamed(AppRoutes.profileEdit);
   }
 }

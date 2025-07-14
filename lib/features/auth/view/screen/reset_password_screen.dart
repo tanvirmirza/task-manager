@@ -11,7 +11,7 @@ import 'package:task_manager/features/auth/controller/reset_password_controller.
 class ResetPasswordScreen extends StatelessWidget {
   ResetPasswordScreen({super.key});
 
-  final controller = Get.put(ResetPasswordController());
+  final controller = Get.find<ResetPasswordController>();
   final validation = FormValidation();
 
   @override

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:task_manager/core/widgets/tm_app_bar.dart';
 import 'package:task_manager/features/tasks/view/screen/cencelled_task_screen.dart';
 import 'package:task_manager/features/tasks/view/screen/completed_task_screen.dart';
-import 'package:task_manager/features/tasks/view/screen/new_task_screen.dart';
+import 'package:task_manager/features/tasks/view/screen/new_task_screen.dart' hide CancelledTaskScreen;
 import 'package:task_manager/features/tasks/view/screen/progerss_task_screen.dart';
 
 class TabStatusScreen extends StatefulWidget {
@@ -15,7 +15,7 @@ class TabStatusScreen extends StatefulWidget {
 class _TabStatusScreenState extends State<TabStatusScreen> {
   int _selectedIndex = 0;
 
-  final List<Widget> _tabs = const [
+  final List<Widget> _tabs = [
     NewTaskScreen(),
     ProgressTaskScreen(),
     CompletedTaskScreen(),

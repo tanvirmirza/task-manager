@@ -1,27 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:task_manager/core/utils/utils_class.dart';
+import 'package:task_manager/features/tasks/controller/new_task_controller.dart';
 import 'package:task_manager/features/tasks/view/widget/task_card.dart';
 
-class NewTaskScreen extends StatefulWidget {
-  const NewTaskScreen({super.key});
+class NewTaskScreen extends StatelessWidget {
+  NewTaskScreen({super.key});
 
-  @override
-  State<NewTaskScreen> createState() => _NewTaskScreenState();
-}
+  final controller = Get.put(TaskListController());
 
-class _NewTaskScreenState extends State<NewTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.separated(
-        itemCount: 6,
-        itemBuilder: (context, index) {
-          return const TaskCard(
-            taskStatus: TaskStatus.sNew,
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        }else if(controller.tasks.isEmpty){
+          return const Center(child: Text('No new tasks found.'));
+        }else{
+          return ListView.separated(
+            padding: const EdgeInsets.all(12),
+            itemCount: controller.tasks.length,
+            itemBuilder: (context, index) {
+              final task = controller.tasks[index];
+              debugPrint("=====================>>$task");
+              return TaskCard(
+                taskStatus: TaskStatus.sNew,
+                title: task.title,
+                description: task.description,
+                createdDate: task.createdDate,
+              );
+            },
+            separatorBuilder: (_, __) => const SizedBox(height: 8),
           );
-        },
-        separatorBuilder: (context, index) => const SizedBox(height: 2),
-      ),
+        }
+
+
+
+
+      }),
     );
   }
 }

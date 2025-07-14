@@ -10,7 +10,7 @@ import 'package:task_manager/features/home/controller/home_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
-  final controller = Get.put(HomeController());
+  final controller = Get.find<HomeController>();
 
   final FunctionLogic logic = FunctionLogic();
 

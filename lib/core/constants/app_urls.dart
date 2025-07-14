@@ -12,6 +12,5 @@ class AppUrls {
   static const String cancelledTaskListUrl = '$_baseUrl/listTaskByStatus/Cancelled';
 
   static String updateTaskStatusUrl(String taskId, String status) => '$_baseUrl/updateTaskStatus/$taskId/$status';
-
   static String deleteTaskUrl(String taskId) => '$_baseUrl/deleteTask/$taskId';
 }

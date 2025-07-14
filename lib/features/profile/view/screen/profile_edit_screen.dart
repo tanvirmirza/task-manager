@@ -9,7 +9,7 @@ import 'package:task_manager/features/profile/view/controller/edit_profile_contr
 class ProfileEditScreen extends StatelessWidget {
   ProfileEditScreen({super.key});
 
-  final controller = Get.put(ProfileEditController());
+  final controller = Get.find<ProfileEditController>();
 
   @override
   Widget build(BuildContext context) {
@@ -75,15 +75,15 @@ class ProfileEditScreen extends StatelessWidget {
             label: const Text('UPLOAD YOUR IMAGE'),
           ),
           const SizedBox(height: 30),
-          const AppTextField(hintText: 'First Name'),
+          AppTextField(hintText: 'First Name',controller: controller.firstNameController,),
           const SizedBox(height: 20),
-          const AppTextField(hintText: 'Last Name'),
+           AppTextField(hintText: 'Last Name',controller: controller.lastNameController),
           const SizedBox(height: 20),
-          const AppTextField(
-              hintText: 'Phone', keyboardType: TextInputType.phone),
+           AppTextField(
+              hintText: 'Phone', keyboardType: TextInputType.phone,controller: controller.mobileController),
           const SizedBox(height: 20),
-          const AppTextField(
-              hintText: 'Email', keyboardType: TextInputType.emailAddress),
+           AppTextField(
+              hintText: 'Email', keyboardType: TextInputType.emailAddress, controller: controller.emailController,),
           const SizedBox(height: 25),
           AppButton(
             text: 'UPDATE',
@@ -136,6 +136,8 @@ class ProfileEditScreen extends StatelessWidget {
           const SizedBox(height: 30),
           Obx(() => AppTextField(
                 hintText: 'New Password',
+                controller: controller.newPasswordController,
+
                 obscureText: controller.isNewObscure.value,
                 textInputAction: TextInputAction.next,
                 suffixIcon: IconButton(
@@ -148,6 +150,7 @@ class ProfileEditScreen extends StatelessWidget {
           const SizedBox(height: 20),
           Obx(() => AppTextField(
                 hintText: 'Confirm Password',
+                controller: controller.confirmPasswordController,
                 obscureText: controller.isConfirmObscure.value,
                 textInputAction: TextInputAction.done,
                 suffixIcon: IconButton(

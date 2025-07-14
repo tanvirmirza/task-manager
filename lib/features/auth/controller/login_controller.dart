@@ -1,32 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:task_manager/core/api/model/api_response.dart';
+import 'package:task_manager/core/api/repository/network_caller_dio.dart';
+import 'package:task_manager/core/constants/app_urls.dart';
 import 'package:task_manager/core/routes/app_routes.dart';
+import 'package:task_manager/core/utils/logger.dart';
+import 'package:task_manager/core/utils/shared_prefarenses_helper.dart';
 
 class LoginController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final prefs = SharedPreferencesHelper();
   final formKey = GlobalKey<FormState>();
 
   final isLoading = false.obs;
 
-  void onAuthLogIn() async {
-    if (formKey.currentState?.validate() == true) {
-      isLoading.value = true;
+  Future<void> onAuthLogIn() async {
+    if (!(formKey.currentState?.validate() ?? false)) return;
 
-      await Future.delayed(const Duration(seconds: 2)); // mock login delay
+    isLoading.value = true;
 
-      isLoading.value = false;
+    final body = {
+      'email': emailController.text.trim(),
+      'password': passwordController.text.trim(),
+    };
 
-      if (emailController.text == 'example@mail.com' &&
-          passwordController.text == 'P@ssw0rd') {
-        Get.toNamed(AppRoutes.nav);
-      } else {
-        Get.snackbar('Error', 'Invalid credentials',
-            snackPosition: SnackPosition.BOTTOM);
+    final ResponseData response = await NetworkCaller.postRequest(
+      AppUrls.loginUrl,
+      body: body,
+    );
+
+    isLoading.value = false;
+
+    if (response.isSuccess) {
+      final data = response.responseData;
+      final token = (data is Map<String, dynamic>) ? data['token'] : null;
+
+      if (token != null && token is String && token.isNotEmpty) {
+        await prefs.setString("token", token);
+        AppLoggerHelper.debug(token);
       }
+
+      await prefs.setBool("isLogIn", true);
+
+      Get.offAllNamed(AppRoutes.nav);
+    } else {
+      Get.snackbar(
+        'Login Failed',
+        'Something went wrong. Please try again.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
     }
   }
-
 
   @override
   void onClose() {

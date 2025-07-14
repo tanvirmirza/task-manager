@@ -6,7 +6,7 @@ class OnboardingController extends GetxController {
   final prefs = SharedPreferencesHelper();
 
   void completeOnboarding() async {
-    await prefs.setBool("isComplete", true);
+    await prefs.setBool("isCompleted", true);
     Get.offAllNamed(AppRoutes.login);
   }
 
