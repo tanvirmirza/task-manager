@@ -42,13 +42,13 @@ class ForgotPasswordVerifyScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 32),
-                  Obx(() => AppTextField(
+                  AppTextField(
                     hintText: 'Email',
                     onChanged: (val) => controller.email.value = val,
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.emailAddress,
                     validator: validation.validateEmail,
-                  )),
+                  ),
                   const SizedBox(height: 16),
                   AppButton(text: 'Submit',onTap: controller.onSubmit,),
 
