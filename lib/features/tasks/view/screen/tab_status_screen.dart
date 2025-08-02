@@ -49,7 +49,7 @@ class _TabStatusScreenState extends State<TabStatusScreen> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18))),
               labelColor: Theme.of(context).colorScheme.primary,
-              overlayColor: MaterialStateProperty.all(Colors.transparent),
+              overlayColor: WidgetStateProperty.all(Colors.transparent),
               padding: const EdgeInsets.symmetric(horizontal: 10),
               tabs: const [
                 Tab(

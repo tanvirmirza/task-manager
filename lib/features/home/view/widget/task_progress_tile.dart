@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+<<<<<<< Updated upstream:lib/features/home/view/widget/task_progress_tile.dart
 import 'package:task_manager/core/utils/time_util.dart';
 import 'package:task_manager/core/utils/utils_class.dart';
+=======
+import 'package:task_manager/core/utility_class.dart';
+>>>>>>> Stashed changes:lib/ui/widgets/task_progress_tile.dart
 
 class TaskProgressTile extends StatelessWidget {
   const TaskProgressTile({
